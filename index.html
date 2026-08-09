@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="REALIZE OS 投資家向け電子書籍。人生支援を、産業にする。">
+<meta name="theme-color" content="#0e1a2b">
+<title>REALIZE OS | INVESTOR EXECUTIVE BOOK</title>
+<style>
+:root{--navy:#0e1a2b;--gold:#b88a32;--gold-l:#d8b65a;--ink:#303b4b;--muted:#667386;--mist:#f1f4f8;--line:#dde3eb}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:#e9edf2;color:var(--ink);line-height:1.72;
+  font-family:"Noto Sans JP","Noto Sans CJK JP","Yu Gothic","Hiragino Kaku Gothic ProN",sans-serif}
+
+/* ---------- 表紙 ---------- */
+.cover{min-height:100svh;background:var(--navy);color:#fff;display:flex;flex-direction:column;
+  justify-content:center;padding:8vw max(7vw,26px);position:relative;overflow:hidden}
+.cover:before{content:"";position:absolute;inset:0 0 0 auto;width:42%;
+  background:repeating-linear-gradient(104deg,transparent 0 62px,#243149 63px 65px)}
+.cover>*{position:relative;max-width:1100px}
+.cover .brand{color:var(--gold-l);font-size:clamp(1.75rem,5vw,4.7rem);font-weight:700;
+  letter-spacing:.04em;margin:0 0 1.6rem}
+.cover h1{color:#fff;font-size:clamp(2rem,6vw,5.7rem);line-height:1.06;letter-spacing:.01em;
+  border:0;margin:0;padding:0}
+.cover .tagline{color:#fff;font-size:clamp(1.15rem,2.8vw,2.5rem);font-weight:700;
+  border-top:5px solid var(--gold);padding-top:1.3rem;margin:2.4rem 0 1rem;width:max-content;max-width:100%}
+.cover .story{color:var(--gold-l);font-size:clamp(.95rem,2vw,1.75rem);font-weight:700;
+  letter-spacing:.1em;margin:.5rem 0}
+.cover .company{margin-top:9vh;color:#d8dee8;font-size:.95rem}
+.cover .scroll{position:absolute;left:0;right:0;bottom:max(18px,env(safe-area-inset-bottom));
+  text-align:center;color:#8797ad;font-size:.7rem;letter-spacing:.24em}
+.printbtn{position:absolute;z-index:3;right:max(24px,5vw);top:max(22px,4vw);border:1px solid #d8b65a80;
+  background:transparent;color:var(--gold-l);padding:11px 16px;font:700 .68rem/1 inherit;letter-spacing:.12em;cursor:pointer}
+.printbtn:hover{border-color:var(--gold-l);color:#fff;background:#ffffff0a}
+
+/* ---------- レイアウト ---------- */
+.layout{max-width:1280px;margin:auto;display:grid;grid-template-columns:270px minmax(0,1fr);
+  gap:54px;padding:70px 32px 110px}
+main{background:#fff;padding:20px 72px 80px;box-shadow:0 12px 45px #15203312}
+
+/* ---------- 目次 ---------- */
+nav{position:sticky;top:24px;align-self:start;background:#fff;padding:22px 18px;
+  border-top:5px solid var(--gold);box-shadow:0 8px 30px #15203314}
+nav h2{border:0;padding:0;margin:0 0 12px;font-size:.72rem;letter-spacing:.24em;color:var(--gold)}
+.toc a{display:grid;grid-template-columns:26px 1fr;gap:9px;text-decoration:none;color:var(--ink);
+  padding:9px 4px;border-bottom:1px solid var(--line);align-items:start}
+.toc a:last-child{border-bottom:0}
+.toc .n{color:var(--gold);font-weight:700;font-size:.72rem;line-height:1.5;padding-top:.1em}
+.toc .t{font-size:.78rem;line-height:1.45;font-weight:700;color:var(--navy)}
+.toc .e{display:block;color:var(--muted);font-size:.62rem;font-weight:400;
+  letter-spacing:.09em;margin-top:2px}
+.toc a[aria-current="true"]{background:var(--mist)}
+.toc a[aria-current="true"] .t{color:var(--gold)}
+
+/* ---------- 本文 ---------- */
+section{padding:56px 0 44px;border-bottom:1px solid var(--line);scroll-margin-top:16px}
+section:last-of-type{border-bottom:0}
+.eyebrow{color:var(--gold);font-size:.76rem;font-weight:700;letter-spacing:.12em;margin:0 0 8px}
+h1{color:var(--navy);font-size:clamp(1.5rem,3vw,2.45rem);line-height:1.3;margin:0 0 22px;
+  padding-bottom:15px;border-bottom:3px solid var(--navy)}
+h2{color:var(--navy);font-size:1.12rem;line-height:1.5;border-left:4px solid #c6a961;
+  padding-left:.75em;margin:1.7em 0 .6em}
+p{margin:.45em 0 1em;text-align:justify}
+.lead{color:var(--muted);font-size:1.05rem;line-height:1.8;text-align:left}
+.statement{background:var(--navy);color:#fff;font-weight:700;padding:1.1em 1.35em;
+  text-align:center;border-left:7px solid var(--gold)}
+.card{background:var(--mist);color:var(--navy);padding:.72em 1em;margin:.4em 0;text-align:left}
+.card strong{color:#9c7426;margin-right:.7em}
+
+.flow{counter-reset:step;list-style:none;padding:0;margin:1.1em 0;border-top:1px solid var(--line)}
+.flow li{counter-increment:step;padding:.8em 1em .8em 3.6em;border-bottom:1px solid var(--line);
+  font-weight:700;color:var(--navy);position:relative}
+.flow li:nth-child(odd){background:var(--mist)}
+.flow li:before{content:counter(step,decimal-leading-zero);position:absolute;left:1.15em;
+  color:var(--gold);font-size:.82em}
+
+.financial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:10px;margin:1.5em 0}
+.metric{background:var(--mist);padding:1.4em .8em;text-align:center}
+.metric:last-child{background:var(--navy);color:#fff}
+.metric span{display:block;color:var(--gold);font-weight:700;font-size:.8rem;letter-spacing:.08em}
+.metric strong{display:block;font-size:clamp(1.3rem,2.05vw,2.2rem);line-height:1.25;
+  margin-top:.25em;color:var(--navy);white-space:nowrap}
+.metric:last-child strong{color:#fff}
+
+.roadmap{display:grid;grid-template-columns:repeat(auto-fit,minmax(152px,1fr));gap:12px}
+.roadmap article{background:var(--mist);padding:1.35em}
+.roadmap article:last-child{background:var(--navy);color:#fff}
+.roadmap span{color:var(--gold);font-weight:700;font-size:.8rem;letter-spacing:.08em}
+.roadmap h3{color:var(--navy);border:0;padding:0;margin:.3em 0 .7em;font-size:1.3rem}
+.roadmap article:last-child h3{color:#fff}
+.roadmap strong{display:block;font-size:1.02rem;color:inherit;margin:.28em 0}
+.roadmap p{font-size:.85rem;text-align:left;margin-top:1em}
+
+.endmark{text-align:center;padding:64px 0 8px}
+.endmark .m{color:var(--gold);font-size:1.35rem;font-weight:700;letter-spacing:.09em}
+.endmark .c{color:var(--navy);font-size:1.05rem;font-weight:700;margin:.5em 0 0}
+.endmark .s{color:var(--muted);font-size:.9rem;margin:.9em 0 0}
+
+/* ---------- モバイル用 目次UI ---------- */
+.tocbtn,.topbtn{display:none}
+#tocpanel{display:none}
+
+/* 中間幅：本文カラムが痩せすぎないよう余白を締める */
+@media(max-width:1150px){
+  .layout{grid-template-columns:230px minmax(0,1fr);gap:34px;padding:52px 22px 90px}
+  main{padding:16px 38px 68px}
+  nav{padding:20px 15px}
+}
+
+@media(max-width:1000px){
+  .layout{display:block;padding:0;max-width:none}
+  main{padding:0 20px 72px;box-shadow:none}
+  section{padding:38px 0 30px;scroll-margin-top:8px}
+  /* 狭幅では両端揃えが字間を壊すため左揃えに */
+  p{text-align:left;overflow-wrap:anywhere;line-break:strict}
+  .financial-grid,.roadmap{grid-template-columns:1fr}
+  h2{font-size:1.06rem}
+  .flow li{padding:.75em .8em .75em 3.4em}
+
+  /* ページ先頭の目次カード */
+  nav{position:static;margin:0;padding:26px 20px 8px;border-top:0;box-shadow:none;background:#fff}
+  nav h2{font-size:.68rem;letter-spacing:.26em;margin-bottom:4px}
+  nav .navttl{color:var(--navy);font-size:1.5rem;font-weight:700;margin:0 0 14px;
+    padding-bottom:12px;border-bottom:3px solid var(--navy)}
+  .toc a{grid-template-columns:30px 1fr;padding:13px 2px;min-height:52px}
+  .toc .n{font-size:.8rem}
+  .toc .t{font-size:.92rem}
+  .toc .e{font-size:.66rem}
+
+  /* 追従ボタン */
+  .tocbtn,.topbtn{display:flex;position:fixed;z-index:40;align-items:center;justify-content:center;
+    border:0;cursor:pointer;box-shadow:0 6px 20px #0e1a2b40;font-family:inherit}
+  .tocbtn{right:16px;bottom:calc(16px + env(safe-area-inset-bottom));height:50px;padding:0 20px;
+    border-radius:25px;background:var(--navy);color:#fff;font-size:.86rem;font-weight:700;gap:8px}
+  .tocbtn b{color:var(--gold-l);font-weight:700}
+  .topbtn{right:16px;bottom:calc(76px + env(safe-area-inset-bottom));width:44px;height:44px;
+    border-radius:22px;background:#fff;color:var(--navy);font-size:1.05rem;
+    box-shadow:0 4px 14px #0e1a2b26;opacity:0;pointer-events:none;transition:opacity .2s}
+  .topbtn.on{opacity:1;pointer-events:auto}
+
+  /* オーバーレイ目次 */
+  #tocpanel{display:block;position:fixed;inset:0;z-index:50;background:#fff;
+    overflow-y:auto;-webkit-overflow-scrolling:touch;
+    transform:translateY(100%);transition:transform .28s ease;visibility:hidden;
+    padding:20px 20px calc(90px + env(safe-area-inset-bottom));
+    padding-top:calc(20px + env(safe-area-inset-top))}
+  #tocpanel.open{transform:translateY(0);visibility:visible}
+  #tocpanel .hd{display:flex;align-items:center;justify-content:space-between;
+    padding-bottom:12px;border-bottom:3px solid var(--navy);margin-bottom:6px}
+  #tocpanel .hd p{margin:0;color:var(--navy);font-size:1.4rem;font-weight:700}
+  #tocpanel .hd small{display:block;color:var(--gold);font-size:.62rem;letter-spacing:.26em;
+    font-weight:700;margin-bottom:2px}
+  #tocpanel .close{border:0;background:var(--mist);color:var(--navy);width:44px;height:44px;
+    border-radius:22px;font-size:1.2rem;cursor:pointer;flex:none}
+}
+@media(max-width:360px){
+  main{padding:0 14px 72px}
+  nav{padding:24px 14px 8px}
+  .toc .t{font-size:.88rem}
+}
+
+@media print{
+  @page{size:A4;margin:18mm}
+  body{background:#fff;font-size:9.5pt}
+  .cover{height:auto;min-height:0;break-after:page;padding:25mm}
+  .layout{display:block;max-width:none;padding:0}
+  nav,.tocbtn,.topbtn,#tocpanel,.cover .scroll,.printbtn{display:none!important}
+  main{padding:0;box-shadow:none}
+  section{padding:9mm 0 7mm;break-inside:auto}
+  h1,h2,.financial-grid,.roadmap,.card,.statement,.flow{break-inside:avoid}
+  h1,h2{break-after:avoid}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#tocpanel{transition:none}}
+</style></head>
+
+<body id="top">
+<header class="cover">
+  <p class="brand">REALIZE OS</p>
+  <h1>INVESTOR<br>EXECUTIVE BOOK</h1>
+  <p class="tagline">人生支援を、産業にする。</p>
+  <p class="story">16 CHAPTER INVESTMENT STORY</p>
+  <p class="company">株式会社REALIZE OS</p>
+  <button class="printbtn" type="button" onclick="window.print()">PRINT / PDF</button>
+  <p class="scroll">SCROLL</p>
+</header>
+
+<div class="layout">
+<nav aria-label="目次">
+  <h2>CONTENTS</h2>
+  <p class="navttl">目次</p>
+  <div class="toc" id="toc-main"></div>
+</nav>
+
+<main>
+
+<section id="chapter-01">
+  <p class="eyebrow">CHAPTER 01 &nbsp; VISION</p>
+  <h1>人生支援を、産業にする。</h1>
+  <p class="lead">子どもたちが、生きることに希望を持てる社会をつくる。</p>
+  <p>私たちが、REALIZE OSをつくる最終的な目的は、住宅をたくさん売ることではありません。大きな会社をつくることでもありません。私たちが、本当に実現したい未来があります。子どもの虐待や自殺が減っていく社会。子どもたちが、自分では選ぶことのできない環境によって傷つき、未来への希望を失ってしまう。そんな社会を、次の世代へ残したくありません。</p>
+  <h2>だから、家庭を支える。</h2>
+  <p>子どもの人生は、家庭とつながっています。家庭は、お金。住まい。仕事。健康。家族関係。将来への不安。そして、困ったときに相談できる環境と、つながっています。だから私たちは、問題が深刻になってから支援するだけではなく、その前から、家庭を支えたい。</p>
+  <h2>人生100年時代。</h2>
+  <p>人生の選択肢は増えました。しかし、お金。住まい。万が一。健康。災害。老後。これらを、「一人の人生」として横断的に、学び、診断し、設計し、相談できる仕組みは、まだ十分ではありません。そこで、人生教育。診断。人生設計。AI。人間の専門家。地域ネットワーク。を一つにつなぐ。それが、REALIZE OSです。</p>
+  <h2>PREVENTION BEFORE CRISIS.</h2>
+  <p>困ってから、初めて考えるのではない。問題が深刻になる前に、気づく。学ぶ。家族で話す。未来を設計する。そして、相談する。その機会を、社会の当たり前にする。</p>
+  <h2>LIFE SUPPORT OPERATING SYSTEM</h2>
+  <p class="statement">人生支援を、産業にする。人生設計を、日本の新しい文化へ。家庭を支え、子どもの未来を支える。これが、REALIZE OSの存在理由です。</p>
+</section>
+
+<section id="chapter-02">
+  <p class="eyebrow">CHAPTER 02 &nbsp; PROBLEM</p>
+  <h1>人生は100年になった。</h1>
+  <p class="lead">しかし、「人生を学ぶ仕組み」は変わっていない。</p>
+  <p>情報は増えた。選択肢も増えた。AIによって、答えらしきものも簡単に手に入る。それでも、多くの人が分からない。「自分の場合、どうすればいいのか。」住宅は住宅会社。保険は保険会社。金融は金融機関。健康は医療機関。専門家はいる。しかし、人生は分断されていない。必要なのは、商品を選ぶ前に、人生全体を考える仕組みです。</p>
+</section>
+
+<section id="chapter-03">
+  <p class="eyebrow">CHAPTER 03 &nbsp; WHY NOW</p>
+  <h1>三つの巨大変化が、同時に起きている。</h1>
+  <h2>① 人生100年時代</h2>
+  <p>人生が長期化し、一つの判断が、数十年先まで影響する。</p>
+  <h2>② AI時代</h2>
+  <p>情報収集。比較。分析。計算。はAIが担う。だから、「何を選ぶか」という判断軸の価値が上がる。</p>
+  <h2>③ 企業の役割変化</h2>
+  <p>社員の、家計。住宅。健康。介護。老後。といった人生課題を、企業も無視できなくなっている。</p>
+  <p class="statement">この三つが重なる場所に、「人生支援」という新市場が生まれる。</p>
+</section>
+
+<section id="chapter-04">
+  <p class="eyebrow">CHAPTER 04 &nbsp; SOLUTION</p>
+  <h1>人生100年を、一つのOSで支える。</h1>
+  <ol class="flow">
+    <li>LIFE ID ｜ 自分を知る。</li>
+    <li>LIFE SHIFT ｜ 時代を知る。</li>
+    <li>LIFE Check42 ｜ 現在地を知る。</li>
+    <li>LIFE Map ｜ 人生を可視化する。</li>
+    <li>LIFE Academy ｜ 判断軸を学ぶ。</li>
+    <li>LIFE ROAD Map ｜ 未来を設計する。</li>
+    <li>LIFE Meeting ｜ 家族と共有する。</li>
+    <li>AI × HUMAN ｜ 日常はAI。重要な判断は人。</li>
+  </ol>
+  <p>そして、LIFE STEPが、このすべてを、一人の人生に沿った導線として動かす。</p>
+</section>
+
+<section id="chapter-05">
+  <p class="eyebrow">CHAPTER 05 &nbsp; BUSINESS MODEL</p>
+  <h1>複数の入口。一つのOS。</h1>
+  <p>REALIZE OSには、四つの市場入口があります。</p>
+  <p class="card"><strong>LMP</strong>住宅・不動産会社向け経営OS。</p>
+  <p class="card"><strong>REALIZE CLUB</strong>企業向け人生支援型福利厚生。</p>
+  <p class="card"><strong>RCP</strong>個人向け人生支援。</p>
+  <p class="card"><strong>Philosophy Person</strong>影響力者の哲学・判断軸をAI × 教育で承継。</p>
+  <p>入口は違う。しかし、人生教育。診断。人生設計。LIFE STEP。AI。専門家ネットワーク。という、中核OSは共通。一つの開発投資が、複数の収益チャネルを強化する。</p>
+</section>
+
+<section id="chapter-06">
+  <p class="eyebrow">CHAPTER 06 &nbsp; KEY INNOVATION</p>
+  <h1>「顧客を買う」から、「顧客基盤をつくる」へ。</h1>
+  <h2>従来の住宅・不動産会社。</h2>
+  <ol class="flow">
+    <li>広告費</li><li>反響</li><li>競合</li><li>営業</li><li>成約</li><li>翌月また広告。</li>
+  </ol>
+  <p>つまり、顧客との出会いを買い続ける。</p>
+  <h2>REALIZE OSでは、</h2>
+  <ol class="flow">
+    <li>REALIZE CLUB導入</li><li>導入収益</li><li>月額収益</li><li>社員会員</li>
+    <li>人生支援</li><li>相談</li><li>住宅・不動産・保険等へ変える。</li>
+  </ol>
+  <p class="statement">つまり、顧客基盤形成そのものを、収益事業へ変える。</p>
+</section>
+
+<section id="chapter-07">
+  <p class="eyebrow">CHAPTER 07 &nbsp; CORE ENGINE</p>
+  <h1>1 LMPから、地域経済圏をつくる。</h1>
+  <p class="lead">基準モデル。</p>
+  <ol class="flow">
+    <li>LMP 1社</li><li>RC 月10社</li><li>年間120社</li><li>平均20名</li><li>約2,400人</li>
+  </ol>
+  <p>一つのLMPから、年間約2,400人との、人生支援接点を形成する。そして、LIFE STEPとAIが、大人数の日常支援を担う。必要な相談だけ、人が対応する。</p>
+  <p class="statement">DIGITAL FOR SCALE. HUMAN FOR DEPTH.</p>
+</section>
+
+<section id="chapter-08">
+  <p class="eyebrow">CHAPTER 08 &nbsp; REVENUE MODEL</p>
+  <h1>FLOW × STOCK × LTV × NETWORK</h1>
+  <p class="card"><strong>FLOW</strong>LMP加盟。RC導入。住宅。不動産。保険。専門サービス。</p>
+  <p class="card"><strong>STOCK</strong>LMPロイヤリティ。RC月額。RCP月額。</p>
+  <p class="card"><strong>LTV</strong>住宅。住み替え。売却。保険。相続。老後。再相談。紹介。</p>
+  <p class="card"><strong>NETWORK</strong>LMP。企業。会員。専門家。影響力者。</p>
+  <p>売上と同時に、「次の売上を生む基盤」が積み上がる。</p>
+</section>
+
+<section id="chapter-09">
+  <p class="eyebrow">CHAPTER 09 &nbsp; TRACTION</p>
+  <h1>旧LMPで、「営業価値」は一度証明した。</h1>
+  <p class="lead">旧LMPでは、大規模広告を使わず、紹介中心で1か月6社加盟。</p>
+  <p>さらに、ある加盟店では、年間2棟 → 12棟。住宅販売を約6倍へ伸ばした。しかし、旧モデルには限界があった。飛び込み集客。リアル研修。Founder依存。属人的マネジメント。AIロープレなし。性格波形診断なし。REALIZE CLUBなし。本部収益設計も未完成。結果、6社中3社が離脱。3社は現在も残り、新モデルを待っている。</p>
+</section>
+
+<section id="chapter-10">
+  <p class="eyebrow">CHAPTER 10 &nbsp; EVOLUTION</p>
+  <h1>OLD LMPは、PoCだった。</h1>
+  <p class="lead">旧LMPで分かったこと。</p>
+  <p class="card"><strong>DEMAND</strong>1か月6社加盟。</p>
+  <p class="card"><strong>VALUE</strong>2棟 → 12棟。</p>
+  <p class="card"><strong>LIMIT</strong>そのままではスケールしない。</p>
+  <h2>新LMPでは</h2>
+  <p>REALIZE CLUB。LIFE STEP。REALIZE Sales OS。AIロープレ。AI営業支援。性格波形診断。マネジメントツール。新収益モデル。を追加した。</p>
+  <p class="statement">OLD — SALES REPEATABILITY　／　NEW — BUSINESS REPEATABILITY<br>これは再スタートではない。Version 2への進化である。</p>
+</section>
+
+<section id="chapter-11">
+  <p class="eyebrow">CHAPTER 11 &nbsp; MOAT</p>
+  <h1>単品ではなく、「STACK」が強い。</h1>
+  <ol class="flow">
+    <li>30年の現場知</li><li>人生教育IP</li><li>LIFE STEP</li><li>REALIZE Sales OS</li>
+    <li>AI</li><li>性格波形診断</li><li>LMP・RCネットワーク</li><li>会員基盤</li>
+    <li>専門家ネットワーク</li><li>DATA</li><li>人生支援ブランド</li>
+  </ol>
+  <p>AIだけなら真似できる。診断だけでも真似できる。教育だけでも真似できる。しかし、一つを真似しても、全体は成立しない。そして、利用者が増えるほど、MOATは強くなる。</p>
+</section>
+
+<section id="chapter-12">
+  <p class="eyebrow">CHAPTER 12 &nbsp; SCALABILITY</p>
+  <h1>本部が全国を直接営業しない。</h1>
+  <ol class="flow">
+    <li>本部</li><li>LMP</li><li>REALIZE CLUB</li><li>社員会員</li>
+    <li>LIFE STEP ＋ AI</li><li>必要な相談だけ人へ。</li>
+  </ol>
+  <p class="statement">CENTRALIZED OS × DISTRIBUTED EXECUTION</p>
+  <p class="card"><strong>YEAR 1</strong>LMP 100社。RC 1,000社。</p>
+  <p class="card"><strong>YEAR 2</strong>LMP 300社。RC 5,000社。</p>
+  <p class="card"><strong>YEAR 3</strong>LMP 600社。RC 15,000社。</p>
+  <p>RC平均20名なら、Year3で、約30万人の人生支援接点。</p>
+</section>
+
+<section id="chapter-13">
+  <p class="eyebrow">CHAPTER 13 &nbsp; FINANCIAL GROWTH</p>
+  <h1>コア事業だけで、3年間の成長をつくる。</h1>
+  <p class="lead">現在、数量・単価を具体的に置いている、LMP＋RCのみで、</p>
+  <div class="financial-grid">
+    <article class="metric"><span>YEAR 1</span><strong>約15.93億円</strong></article>
+    <article class="metric"><span>YEAR 2</span><strong>約61.39億円</strong></article>
+    <article class="metric"><span>YEAR 3</span><strong>約154.44億円</strong></article>
+  </div>
+  <p>この数字には、RCP。Philosophy Person。住宅。売買仲介。賃貸。保険。その他専門サービス。を含めていない。つまり、CORE BUSINESS ONLY. そして、Year1で最も重要なのは、154億円を信じてもらうことではない。154億円へつながる成長方程式を、実績で証明すること。</p>
+</section>
+
+<section id="chapter-14">
+  <p class="eyebrow">CHAPTER 14 &nbsp; 3-YEAR ROADMAP</p>
+  <h1>PROVE → SCALE → PLATFORM</h1>
+  <div class="roadmap">
+    <article><span>YEAR 1</span><h3>PROVE</h3><strong>現存LMP 3社。</strong><strong>新規 97社。</strong><p>LMP 100社。RC 1,000社。モデルを証明する。</p></article>
+    <article><span>YEAR 2</span><h3>SCALE</h3><strong>LMP 300社。</strong><strong>RC 5,000社。</strong><p>成功モデルを全国へコピーする。</p></article>
+    <article><span>YEAR 3</span><h3>PLATFORM</h3><strong>LMP 600社。</strong><strong>RC 15,000社。</strong><p>人生支援ネットワークをプラットフォームへ。</p></article>
+  </div>
+</section>
+
+<section id="chapter-15">
+  <p class="eyebrow">CHAPTER 15 &nbsp; FUNDRAISING</p>
+  <h1>3億円を、企業価値へ変換する。</h1>
+  <p class="lead">調達目標 3億円</p>
+  <h2>主な投資先</h2>
+  <p class="card"><strong>システム・AI・プロダクト</strong>9,000万円</p>
+  <p class="card"><strong>人材・組織</strong>7,500万円</p>
+  <p class="card"><strong>LMP・RC営業拡大</strong>6,000万円</p>
+  <p>その他、マーケティング。教育。知財・法務。運転資金。へ投資。</p>
+  <h2>しかし、重要なのは、何に使うかではない。何へ変えるか。</h2>
+  <p>12か月後、統合されたREALIZE OS。LMP100拠点。RC1,000社。約2万人の人生支援対象者基盤。ストック収益。利用データ。再現可能な成長モデル。へ変換する。</p>
+  <p class="statement">CAPITAL → ENTERPRISE VALUE</p>
+</section>
+
+<section id="chapter-16">
+  <p class="eyebrow">CHAPTER 16 &nbsp; INVESTMENT CASE</p>
+  <h1>なぜ、REALIZE OSなのか。</h1>
+  <p class="lead">ここまで説明してきた、REALIZE OSの投資機会を、7つに整理します。</p>
+
+  <h2>01｜NEW CATEGORY</h2>
+  <p>「人生支援」という新しいカテゴリーをつくる。住宅だけではない。保険だけでもない。金融だけでもない。AIだけでもない。人生について、知る。学ぶ。診断する。設計する。相談する。その一連を、一つの産業にする。</p>
+
+  <h2>02｜UPSTREAM POSITION</h2>
+  <p>巨大な人生関連市場の「前工程」を取る。住宅。不動産。保険。金融。相続。介護。健康。教育。REALIZE OSが、すべての商品を自社で販売する必要はありません。その前に、本人が、自分の人生課題に気づく場所になる。つまり、商品を選ぶ前の「人生判断の入口」を取る。</p>
+
+  <h2>03｜MULTI-LAYER ECONOMICS</h2>
+  <p>FLOW × STOCK × LTV × NETWORK。LMP加盟。RC導入。住宅・不動産等による、FLOW。LMPロイヤリティ。RC月額。RCP月額による、STOCK。人生100年の関係による、LTV。LMP。企業。会員。専門家。影響力者による、NETWORK。複数の経済価値が、同時に積み上がる。</p>
+
+  <h2>04｜ONE OS, MULTIPLE MARKETS</h2>
+  <p>一つのOSを、複数市場へ展開する。LMP。REALIZE CLUB。RCP。Philosophy Person。入口は違う。しかし、人生教育。診断。人生設計。LIFE STEP。AI。という、中核OSは共通。つまり、一つの開発投資が、複数事業を強化する。</p>
+
+  <h2>05｜SCALABLE DISTRIBUTION</h2>
+  <p>本部だけで全国展開しない。本部が、LMPを増やす。LMPが、REALIZE CLUBを増やす。企業から、社員会員へ広がる。LIFE STEPとAIが、日常支援を届ける。人間は、重要な相談へ集中する。CENTRALIZED OS × DISTRIBUTED EXECUTIONによって、全国展開する。</p>
+
+  <h2>06｜COMPOUNDING ASSETS</h2>
+  <p>時間が、企業価値を積み上げる。LMPが残る。RC企業が残る。会員との関係が残る。ストック収益が残る。データが残る。専門家ネットワークが残る。知的財産が残る。ブランドが残る。つまり、成長そのものが、次の成長資産になる。</p>
+
+  <h2>07｜SOCIAL IMPACT × ECONOMICS</h2>
+  <p>人を支援するほど、事業が成長する。</p>
+  <ol class="flow">
+    <li>人生支援を届ける。</li><li>学ぶ人が増える。</li><li>人生課題に気づく人が増える。</li>
+    <li>必要な相談が生まれる。</li><li>課題解決が増える。</li><li>加盟店の利益が増える。</li>
+    <li>本部も成長する。</li><li>さらに多くの人へ人生支援を届けられる。</li>
+  </ol>
+  <p>社会的価値と、経済合理性を、同じ方向へ向ける。</p>
+</section>
+
+<section id="closing">
+  <p class="eyebrow">CLOSING &nbsp; OUR ULTIMATE VISION</p>
+  <h1>そして、その先へ。</h1>
+
+  <h2>しかし、</h2>
+  <p>これらは最終目的ではありません。LMP100社。600社。REALIZE CLUB1,000社。15,000社。売上154億円。その先の会員100万人。大きなネットワーク。大きな企業価値。私たちは、それらを目指します。しかし、すべて手段です。</p>
+
+  <h2>OUR ULTIMATE VISION</h2>
+  <p>子どもたちが、生きることに希望を持てる社会をつくる。私たちが、本当に減らしたいものがあります。子どもの虐待。子どもの自殺。ただし、REALIZE OSだけで、虐待や自殺という複雑な社会問題を解決できるとは考えていません。医療。福祉。教育。行政。地域社会。専門機関。多くの力が必要です。その中で、REALIZE OSが担える役割があります。</p>
+
+  <h2>問題が深刻になる前に、</h2>
+  <p>家庭へ人生支援を届ける。家計について学べる。住まいについて考えられる。万が一へ備えられる。健康について学べる。将来を見通せる。人生を設計できる。家族で未来について話せる。そして、困ったときに、相談できる。</p>
+
+  <h2>「気づく・学ぶ・話す・相談する」</h2>
+  <p>機会を社会に増やす。問題が起きてから、助けるだけではない。問題が深刻になる前に、気づける社会をつくる。相談できる社会をつくる。人生について、家族で話せる社会をつくる。</p>
+
+  <h2>親の人生を支えることが、</h2>
+  <p>子どもの未来を支えることにつながる。家庭が、少し安定する。将来への不安が、少し減る。夫婦が、未来について話す。困ったときに、一人で抱え込まない。そうした家庭を、一つずつ増やしていく。その積み重ねの先に、私たちが実現したい社会があります。</p>
+
+  <h2>REALIZE OS</h2>
+  <p>人生支援を、産業にする。善意だけでは、全国へ届け続けることはできません。だから、持続可能な事業にする。企業が利益を得る。加盟店も利益を得る。その利益を、次の人生支援へ再投資する。事業が成長するほど、支援できる家庭を増やす。</p>
+
+  <p class="statement">BUILD THE BUSINESS. SCALE THE NETWORK.<br>CREATE THE INDUSTRY. CHANGE THE CULTURE.</p>
+
+  <h2>家庭を支え、</h2>
+  <p>子どもの未来を支える。子どもたちが、自分の未来に希望を持てる社会へ。子どもの虐待や自殺が、少しずつでも減っていく社会へ。</p>
+
+  <h2>人生支援を、産業にする。</h2>
+  <p>人生設計を、日本の新しい文化へ。そして、すべては、100年後の子どもたちのために。</p>
+</section>
+
+<div class="endmark">
+  <p class="m">REALIZE OS</p>
+  <p class="c">人生支援を、産業にする。</p>
+  <p class="s">すべては、100年後の子どもたちのために。</p>
+</div>
+
+</main>
+</div>
+
+<button class="tocbtn" id="tocbtn" aria-controls="tocpanel" aria-expanded="false"><b>≡</b>目次</button>
+<button class="topbtn" id="topbtn" aria-label="ページ先頭へ">↑</button>
+
+<div id="tocpanel" role="dialog" aria-modal="true" aria-label="目次" aria-hidden="true">
+  <div class="hd">
+    <p><small>CONTENTS</small>目次</p>
+    <button class="close" id="tocclose" aria-label="目次を閉じる">×</button>
+  </div>
+  <div class="toc" id="toc-panel"></div>
+</div>
+
+<script>
+(function(){
+  var CH=[
+    ["01","人生支援を、産業にする。","VISION"],
+    ["02","人生は100年になった。","PROBLEM"],
+    ["03","三つの巨大変化が、同時に起きている。","WHY NOW"],
+    ["04","人生100年を、一つのOSで支える。","SOLUTION"],
+    ["05","複数の入口。一つのOS。","BUSINESS MODEL"],
+    ["06","「顧客を買う」から、「顧客基盤をつくる」へ。","KEY INNOVATION"],
+    ["07","1 LMPから、地域経済圏をつくる。","CORE ENGINE"],
+    ["08","FLOW × STOCK × LTV × NETWORK","REVENUE MODEL"],
+    ["09","旧LMPで、「営業価値」は一度証明した。","TRACTION"],
+    ["10","OLD LMPは、PoCだった。","EVOLUTION"],
+    ["11","単品ではなく、「STACK」が強い。","MOAT"],
+    ["12","本部が全国を直接営業しない。","SCALABILITY"],
+    ["13","コア事業だけで、3年間の成長をつくる。","FINANCIAL GROWTH"],
+    ["14","PROVE → SCALE → PLATFORM","3-YEAR ROADMAP"],
+    ["15","3億円を、企業価値へ変換する。","FUNDRAISING"],
+    ["16","なぜ、REALIZE OSなのか。","INVESTMENT CASE"],
+    ["--","そして、その先へ。","CLOSING"]
+  ];
+  function build(el){
+    var h="";
+    CH.forEach(function(c){
+      var id=c[0]==="--"?"closing":"chapter-"+c[0];
+      h+='<a href="#'+id+'" data-id="'+id+'"><span class="n">'+c[0]+'</span>'+
+         '<span class="t">'+c[1]+'<span class="e">'+c[2]+'</span></span></a>';
+    });
+    el.innerHTML=h;
+  }
+  var main=document.getElementById("toc-main"), panel=document.getElementById("toc-panel");
+  build(main); build(panel);
+
+  var box=document.getElementById("tocpanel"),
+      btn=document.getElementById("tocbtn"),
+      cls=document.getElementById("tocclose"),
+      top=document.getElementById("topbtn"),
+      lastY=0;
+  function open(){
+    lastY=window.scrollY;
+    box.classList.add("open"); box.setAttribute("aria-hidden","false");
+    btn.setAttribute("aria-expanded","true");
+    document.body.style.overflow="hidden"; cls.focus();
+  }
+  function close(){
+    box.classList.remove("open"); box.setAttribute("aria-hidden","true");
+    btn.setAttribute("aria-expanded","false"); document.body.style.overflow="";
+  }
+  btn.addEventListener("click",open);
+  cls.addEventListener("click",close);
+  panel.addEventListener("click",function(e){ if(e.target.closest("a")) close(); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&box.classList.contains("open")) close(); });
+
+  top.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+  addEventListener("scroll",function(){
+    top.classList.toggle("on", window.scrollY>700);
+  },{passive:true});
+
+  // 現在地ハイライト
+  var links=document.querySelectorAll('#toc-main a, #toc-panel a');
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(!en.isIntersecting) return;
+        links.forEach(function(a){
+          a.setAttribute("aria-current", a.dataset.id===en.target.id ? "true":"false");
+        });
+      });
+    },{rootMargin:"-15% 0px -75% 0px"});
+    document.querySelectorAll("main section").forEach(function(s){ io.observe(s); });
+  }
+})();
+</script>
+</body></html>
