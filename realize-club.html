@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="REALIZE CLUB｜社員のライフリテラシーを育てる、人生支援プラットフォーム。">
+<meta name="theme-color" content="#2f4a3e">
+<title>REALIZE CLUB | 会社が、社員の人生を守る時代へ。</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --showa-bg:#ede1c8;--showa-bg2:#e4d5b0;--showa-ink:#3b2a1e;--showa-line:#c9a55c;
+  --green:#2f4a3e;--green-d:#233b31;--enji:#8a3324;--mustard:#c98a2b;
+  --paper:#f6efe0;
+  --modern-bg:#faf9f6;--modern-ink:#22282a;--modern-muted:#6b7278;--modern-line:#e4e1d8;
+  --accent:#2f4a3e;--accent-l:#4c715f;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--modern-bg);color:var(--modern-ink);
+  font-family:"Noto Sans JP",sans-serif;line-height:1.8;-webkit-text-size-adjust:100%}
+h1,h2,h3,.mincho{font-family:"Shippori Mincho B1",serif}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.eyebrow{display:inline-block;font-size:.72rem;letter-spacing:.32em;font-weight:700}
+
+/* ===== 共通:昭和トーンの背景テクスチャ ===== */
+.showa{
+  background-color:var(--showa-bg);
+  background-image:
+    radial-gradient(ellipse at 20% -10%, #ffffff55 0%, transparent 45%),
+    repeating-linear-gradient(0deg, #00000006 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, #00000005 0 1px, transparent 1px 3px);
+  color:var(--showa-ink);
+}
+.showa .eyebrow{color:var(--enji)}
+
+/* ===== ヘッダー ===== */
+.siteheader{position:sticky;top:0;z-index:50;background:var(--green);color:#fff;
+  box-shadow:0 4px 18px #0002}
+.siteheader .in{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;max-width:1080px;margin:0 auto}
+.siteheader .logo{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.1rem;
+  letter-spacing:.06em;color:#fff;text-decoration:none}
+.siteheader .logo span{color:var(--mustard)}
+.siteheader .cta{background:var(--mustard);color:#2a1c0c;font-weight:700;font-size:.82rem;
+  padding:10px 18px;border-radius:3px;text-decoration:none;letter-spacing:.03em;white-space:nowrap}
+
+/* ===== ① HERO（昭和ポスター調） ===== */
+.hero{position:relative;padding:78px 0 92px;overflow:hidden;border-bottom:6px solid var(--enji)}
+.hero:before{content:"";position:absolute;right:-8%;top:-18%;width:60vmin;height:60vmin;
+  border-radius:50%;background:radial-gradient(circle,#c9832688 0%,#c9832600 68%)}
+.hero .frame{border:2px solid var(--showa-line);padding:46px 34px;position:relative;
+  background:#f6efe0cc}
+.hero .frame:before,.hero .frame:after{content:"";position:absolute;width:26px;height:26px;
+  border:2px solid var(--enji)}
+.hero .frame:before{top:-10px;left:-10px;border-right:0;border-bottom:0}
+.hero .frame:after{bottom:-10px;right:-10px;border-left:0;border-top:0}
+.hero .eyebrow{color:var(--enji);margin-bottom:14px}
+.hero h1{font-size:clamp(2rem,5.4vw,3.4rem);line-height:1.35;margin:0 0 20px;color:var(--green-d)}
+.hero h1 em{display:block;font-style:normal;color:var(--enji)}
+.hero .sub{font-size:clamp(1rem,2vw,1.25rem);font-weight:700;color:#5a4324;margin:0 0 30px}
+.hero .ctarow{display:flex;flex-wrap:wrap;gap:14px}
+.btn{display:inline-block;font-weight:700;padding:15px 30px;border-radius:3px;text-decoration:none;
+  font-size:.95rem;letter-spacing:.03em;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--enji);color:#fff;box-shadow:0 8px 20px #8a332440}
+.btn-ghost{background:transparent;border:2px solid var(--green-d);color:var(--green-d)}
+.hero .badge{margin-top:34px;display:flex;flex-wrap:wrap;gap:10px 22px;font-size:.78rem;
+  color:#6b5636;font-weight:700}
+.hero .badge b{color:var(--green-d)}
+
+/* ===== ② PROBLEM ===== */
+.problem{padding:74px 0}
+.center{text-align:center}
+.lead-xl{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;margin:.3em 0 .6em;color:var(--green-d)}
+.sub-l{color:#6b5636;font-size:1rem;max-width:640px;margin:0 auto 40px}
+.anx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0 0 34px}
+.anx-card{background:var(--paper);border:1px solid var(--showa-line);padding:26px 18px;text-align:center}
+.anx-card .ic{font-size:1.9rem;margin-bottom:10px}
+.anx-card b{display:block;color:var(--green-d);font-size:1.02rem;margin-bottom:6px}
+.anx-card p{margin:0;font-size:.82rem;color:#6b5636}
+.chain{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:.82rem;font-weight:700;color:#5a4324}
+.chain span{background:#fff;border:1px solid var(--showa-line);padding:8px 14px;border-radius:20px}
+.chain .arrow{border:0;background:none;color:var(--enji);padding:8px 0}
+
+/* ===== ③ 昭和 vs 令和（トーン転換の要） ===== */
+.era{padding:86px 0 96px;position:relative}
+.era .head{text-align:center;margin-bottom:46px}
+.era h2{font-size:clamp(1.6rem,3.4vw,2.3rem);color:var(--green-d);margin:.2em 0}
+.era-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--showa-line);
+  background:#fff}
+.era-col{padding:32px 26px}
+.era-col.old{background:var(--showa-bg2)}
+.era-col.new{background:var(--paper);border-left:1px dashed var(--showa-line)}
+.era-col h3{margin:0 0 6px;font-size:1.35rem;color:var(--green-d)}
+.era-col .yr{font-size:.72rem;letter-spacing:.2em;font-weight:700;color:var(--enji)}
+.era-col ul{list-style:none;margin:16px 0 0;padding:0;font-size:.86rem}
+.era-col li{padding:8px 0 8px 22px;position:relative;border-bottom:1px solid #00000012}
+.era-col li:before{content:"◆";position:absolute;left:0;font-size:.6rem;top:11px;color:var(--enji)}
+.era-note{text-align:center;margin-top:34px}
+.statement{display:inline-block;background:var(--green-d);color:#fff;font-weight:700;
+  padding:1.05em 1.8em;border-left:6px solid var(--mustard);font-size:1.02rem}
+
+/* リテラシー4段階 */
+.steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px}
+.steps4 li{list-style:none;background:#fff;border:1px solid var(--showa-line);text-align:center;
+  padding:20px 10px;font-weight:700;color:var(--green-d);font-size:.86rem;position:relative}
+.steps4 li span{display:block;color:var(--enji);font-size:.7rem;letter-spacing:.15em;margin-bottom:6px}
+
+/* ===== ここからモダントーンへ ===== */
+.modern-transition{height:64px;background:linear-gradient(180deg,var(--paper),var(--modern-bg))}
+.modern{background:var(--modern-bg)}
+.section{padding:76px 0}
+.section.alt{background:#fff;border-top:1px solid var(--modern-line);border-bottom:1px solid var(--modern-line)}
+.m-eyebrow{color:var(--accent);letter-spacing:.28em;font-size:.72rem;font-weight:700}
+.m-h2{font-size:clamp(1.5rem,3.2vw,2.15rem);margin:.35em 0 .5em;color:var(--modern-ink);font-weight:900}
+.m-lead{color:var(--modern-muted);max-width:640px;font-size:1rem;margin:0 0 44px}
+
+/* 6ステップ */
+.step-flow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.step-flow li{list-style:none;background:var(--modern-bg);border:1px solid var(--modern-line);
+  border-radius:10px;padding:20px 12px;text-align:center;position:relative}
+.step-flow li .num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;
+  font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.step-flow li b{display:block;font-size:.88rem;color:var(--modern-ink);margin-bottom:4px}
+.step-flow li p{margin:0;font-size:.74rem;color:var(--modern-muted)}
+
+/* AI比較 */
+.ai-wrap{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch}
+.ai-card{border-radius:14px;padding:28px 24px}
+.ai-card.general{background:#f1f1ee;color:#7a7d78}
+.ai-card.mio{background:var(--green-d);color:#fff;box-shadow:0 16px 40px #2f4a3e33}
+.ai-card h3{margin:0 0 16px;font-size:1.1rem}
+.ai-card ul{margin:0;padding-left:1.1em;font-size:.86rem;line-height:1.9}
+.ai-card.mio ul{padding-left:0;list-style:none}
+.ai-card.mio li:before{content:"✓ ";color:var(--mustard);font-weight:900}
+.ai-topics{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px}
+.ai-topics span{background:var(--modern-bg);border:1px solid var(--modern-line);border-radius:20px;
+  padding:8px 16px;font-size:.8rem}
+
+/* 診断・摩擦グリッド */
+.friction-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:44px}
+.friction-grid div{background:var(--modern-bg);border:1px solid var(--modern-line);border-radius:10px;
+  padding:16px 10px;text-align:center;font-size:.78rem;color:var(--modern-muted);font-weight:700}
+.diag-box{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.diag-box .txt b{color:var(--accent)}
+.wave5{display:flex;gap:8px;margin-top:18px}
+.wave5 span{flex:1;height:46px;border-radius:6px;background:linear-gradient(180deg,var(--accent-l),var(--accent))}
+
+/* 5つの価値 */
+.value5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.value5 article{background:var(--modern-bg);border:1px solid var(--modern-line);border-radius:12px;
+  padding:24px 14px;text-align:center}
+.value5 .n{font-size:.7rem;color:var(--accent);font-weight:700;letter-spacing:.1em}
+.value5 h3{margin:.4em 0;font-size:1rem}
+.value5 p{margin:0;font-size:.76rem;color:var(--modern-muted)}
+
+/* 比較表 */
+.cmp{width:100%;border-collapse:collapse;font-size:.9rem}
+.cmp th,.cmp td{border:1px solid var(--modern-line);padding:16px 18px;text-align:left}
+.cmp thead th{background:var(--modern-bg);font-weight:700;color:var(--modern-muted);font-size:.78rem;
+  letter-spacing:.05em}
+.cmp td.old{color:var(--modern-muted)}
+.cmp td.new{color:var(--accent);font-weight:700;background:#f3f7f4}
+.cmp th.new-h{color:#fff;background:var(--accent)}
+
+/* 料金 */
+.price{background:var(--green-d);color:#fff;border-radius:18px;padding:52px 40px;text-align:center;
+  position:relative;overflow:hidden}
+.price:before{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 85% 0%,#ffffff14 0%,transparent 50%)}
+.price h2{position:relative;color:#fff;margin:0 0 10px}
+.price .copy{position:relative;font-size:1.05rem;font-weight:700;color:var(--mustard);margin-bottom:26px}
+.price ul{position:relative;list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:14px 30px;
+  justify-content:center;font-size:.86rem;margin:0 0 30px}
+.price ul li:before{content:"✓ ";color:var(--mustard);font-weight:900}
+
+/* 会社情報 */
+.company{padding:60px 0;border-top:1px solid var(--modern-line)}
+.company .grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;font-size:.86rem;color:var(--modern-muted)}
+.company b{color:var(--modern-ink)}
+
+/* 最終CTA */
+.final{padding:90px 0;text-align:center;background:linear-gradient(180deg,#fff,var(--modern-bg))}
+.final .m-h2{margin-bottom:.3em}
+.final .m-lead{margin-left:auto;margin-right:auto}
+.final .btn-primary{background:var(--enji)}
+
+footer{background:var(--green-d);color:#cfd8d0;padding:30px 0;font-size:.76rem;text-align:center}
+
+/* ===== レスポンシブ ===== */
+@media(max-width:880px){
+  .anx-grid,.friction-grid,.value5,.step-flow{grid-template-columns:repeat(2,1fr)}
+  .steps4{grid-template-columns:repeat(2,1fr)}
+  .era-grid{grid-template-columns:1fr}
+  .era-col.new{border-left:0;border-top:1px dashed var(--showa-line)}
+  .ai-wrap{grid-template-columns:1fr}
+  .diag-box{grid-template-columns:1fr}
+  .company .grid{grid-template-columns:1fr}
+  .cmp{font-size:.8rem}
+  .cmp th,.cmp td{padding:12px 10px}
+}
+@media(max-width:560px){
+  .anx-grid,.friction-grid,.value5,.step-flow,.steps4{grid-template-columns:1fr}
+  .siteheader .logo{font-size:.95rem}
+  .siteheader .cta{padding:9px 14px;font-size:.76rem}
+  .hero .frame{padding:34px 20px}
+  .price{padding:38px 22px}
+}
+</style></head>
+
+<body>
+
+<header class="siteheader">
+  <div class="in">
+    <a class="logo" href="#top">REALIZE <span>CLUB</span></a>
+    <a class="cta" href="#final">資料請求・無料相談</a>
+  </div>
+</header>
+
+<!-- ① HERO -->
+<section class="hero showa" id="top">
+  <div class="wrap">
+    <div class="frame">
+      <p class="eyebrow">REALIZE CLUB ｜ 人生支援プラットフォーム</p>
+      <h1>会社が、<br>社員の人生を守る<em>時代へ。</em></h1>
+      <p class="sub">社員のライフリテラシーを育てる、人生支援プラットフォーム。</p>
+      <div class="ctarow">
+        <a class="btn btn-primary" href="#final">資料請求はこちら</a>
+        <a class="btn btn-ghost" href="#solution">サービス概要を見る</a>
+      </div>
+      <div class="badge">
+        <span><b>いつでも解約可</b>・低コストで導入</span>
+        <span><b>補助金対象プラン</b>あり</span>
+        <span><b>導入企業の5つの効果</b>を実感</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ② PROBLEM -->
+<section class="problem showa">
+  <div class="wrap center">
+    <p class="eyebrow">CURRENT ISSUE</p>
+    <h2 class="lead-xl">頑張っているのに、<br>将来が不安。</h2>
+    <p class="sub-l">社員さんは仕事を頑張りながらも、将来への不安を抱えています。人間関係に疲弊し、物価高で生活が厳しく、結婚・老後への備えも見通せない。相談できる環境がない――それが、現代人の3大不安です。</p>
+    <div class="anx-grid">
+      <div class="anx-card"><div class="ic">💰</div><b>お金の不安</b><p>物価高・家計・将来の資産形成</p></div>
+      <div class="anx-card"><div class="ic">🤝</div><b>人間関係の不安</b><p>職場・家庭・自分を理解してもらえない不安</p></div>
+      <div class="anx-card"><div class="ic">🌙</div><b>将来への不安</b><p>結婚・老後・万が一への漠然とした不安</p></div>
+    </div>
+    <div class="chain">
+      <span>困ってから考える</span><b class="arrow">→</b>
+      <span>後悔を生む</span><b class="arrow">→</b>
+      <span>判断を間違える</span>
+    </div>
+  </div>
+</section>
+
+<!-- ③ 昭和 vs 令和 -->
+<section class="era showa">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">WHY NOW</p>
+      <h2>昭和は、社会が<br>人生設計してくれていた。</h2>
+      <p class="sub-l" style="margin-top:14px">終身雇用と年功序列。頑張れば、成り立った時代。しかし令和は違います。今の時代が求めているのは、自分自身の「人生設計力」です。</p>
+    </div>
+    <div class="era-grid">
+      <div class="era-col old">
+        <p class="yr">SHOWA STYLE</p>
+        <h3>昭和の社会構造</h3>
+        <ul>
+          <li>終身雇用・年功序列で給料も上がりやすい</li>
+          <li>人とのつながりが強く、貯金しやすい</li>
+          <li>物価安・消費税なし・医療費1割負担</li>
+          <li>借金は悪という風潮</li>
+          <li>快適な老後生活</li>
+        </ul>
+      </div>
+      <div class="era-col new">
+        <p class="yr">REIWA STYLE</p>
+        <h3>令和の社会構造</h3>
+        <ul>
+          <li>終身雇用の崩壊、貯金がしにくい</li>
+          <li>晩婚化・未婚化・少子化、人間関係の希薄化</li>
+          <li>物価高・増税・医療費3割負担へ</li>
+          <li>借金は普通、無収入期間への備えが必須</li>
+          <li>老後は20年も延び、定年後100歳まで続く人生</li>
+        </ul>
+      </div>
+    </div>
+    <div class="era-note">
+      <p class="statement">今の時代が求めているのは、人生設計力。</p>
+    </div>
+    <ol class="steps4">
+      <li><span>STEP 01</span>理解力</li>
+      <li><span>STEP 02</span>判断力</li>
+      <li><span>STEP 03</span>設計力</li>
+      <li><span>STEP 04</span>実践力</li>
+    </ol>
+    <p class="sub-l center" style="margin:26px auto 0">「ライフリテラシー」とは、人生を納得しながら歩むための、この4つの力のことです。</p>
+  </div>
+</section>
+
+<div class="modern-transition"></div>
+
+<!-- ④ SOLUTION -->
+<section class="section modern" id="solution">
+  <div class="wrap">
+    <p class="m-eyebrow">SOLUTION</p>
+    <h2 class="m-h2">福利厚生ではない。<br>人生支援プラットフォームです。</h2>
+    <p class="m-lead">REALIZE CLUBは、社員一人ひとりのライフリテラシーを育てる仕組みです。自己理解から実行支援まで、6つのステップで一気通貫にサポートします。</p>
+    <ol class="step-flow">
+      <li><div class="num">1</div><b>性格波形診断</b><p>自己理解・他者理解</p></li>
+      <li><div class="num">2</div><b>社割NEXT</b><p>物価高対策・最大90%OFF</p></li>
+      <li><div class="num">3</div><b>人生教育</b><p>判断軸を手に入れる</p></li>
+      <li><div class="num">4</div><b>人生健康診断</b><p>理想と現実を可視化</p></li>
+      <li><div class="num">5</div><b>人生設計</b><p>人生の地図を描く</p></li>
+      <li><div class="num">6</div><b>人生相談窓口</b><p>専門家へつなぎ、人生を動かす</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ⑤ AI ミオ先生 -->
+<section class="section alt">
+  <div class="wrap">
+    <p class="m-eyebrow">AI CONCIERGE</p>
+    <h2 class="m-h2">社員を一人にしない、<br>人生伴走型AI「ミオ先生」</h2>
+    <p class="m-lead">感情・情報・性格を整理し、24時間365日、最適な判断をサポート。答えを教えるのではなく、人生の答えを、一緒に導き出してくれる先生です。</p>
+    <div class="ai-wrap">
+      <div class="ai-card general">
+        <h3>一般的なAI</h3>
+        <ul>
+          <li>聞かれたことに答えるだけ</li>
+          <li>業務効率化が中心</li>
+          <li>全員に一律の対応</li>
+          <li>ハルシネーションが起きやすい</li>
+          <li>相談して終わり</li>
+          <li>今だけを見たアドバイス</li>
+        </ul>
+      </div>
+      <div class="ai-card mio">
+        <h3>人生伴走型AI ミオ先生</h3>
+        <ul>
+          <li>相談から行動までつなぐ</li>
+          <li>ハルシネーションが起きにくい設計</li>
+          <li>効率化＋判断軸を一緒につくる</li>
+          <li>質問を返しながら深堀りする</li>
+          <li>性格波形診断の結果を分析してアドバイス</li>
+          <li>人生全体最適の視点で、最適な窓口を案内</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ai-topics">
+      <span>お金の不安</span><span>人間関係の不安</span><span>将来への不安</span>
+      <span>結婚・恋愛</span><span>借金</span><span>誰にも言えないこと</span>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ 性格波形診断 -->
+<section class="section modern">
+  <div class="wrap">
+    <p class="m-eyebrow">PERSONALITY DIAGNOSIS</p>
+    <h2 class="m-h2">性格を把握していないことで、<br>職場に摩擦が生まれる。</h2>
+    <div class="friction-grid">
+      <div>上司と部下で<br>噛み合わない</div>
+      <div>早期離職</div>
+      <div>「あの人苦手」が<br>発生する</div>
+      <div>管理職が疲弊する</div>
+      <div>指示が伝わらない</div>
+    </div>
+    <div class="diag-box">
+      <div class="txt">
+        <h3 style="margin:0 0 10px">己を知り、他者を知る。</h3>
+        <p style="color:var(--modern-muted);font-size:.9rem">たった<b>2分の診断</b>で、性格を構成する5つの波形要素を分析。あなたらしさや、周囲の性格傾向を可視化します。診断結果をもとに、ミオ先生が性格に合った伝え方でアドバイス。個人には最適なアドバイスを、企業には採用・人材配置の最適化につながります。</p>
+      </div>
+      <div>
+        <div class="wave5">
+          <span></span><span style="animation-delay:.1s"></span><span></span><span></span><span></span>
+        </div>
+        <p style="font-size:.72rem;color:var(--modern-muted);text-align:center;margin-top:10px">5つの波形要素を可視化</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ 企業が得られる5つの価値 -->
+<section class="section alt">
+  <div class="wrap">
+    <p class="m-eyebrow">VALUE FOR COMPANY</p>
+    <h2 class="m-h2">社員のライフリテラシー向上で、<br>企業が得られる5つの価値。</h2>
+    <div class="value5">
+      <article><p class="n">01</p><h3>離職率低下</h3><p>私生活の安定が定着につながる</p></article>
+      <article><p class="n">02</p><h3>採用力UP</h3><p>圧倒的な差別化になる福利厚生</p></article>
+      <article><p class="n">03</p><h3>生産性向上</h3><p>人生不安が減り、仕事へ集中できる</p></article>
+      <article><p class="n">04</p><h3>エンゲージメントUP</h3><p>会社への信頼が実感できる価値になる</p></article>
+      <article><p class="n">05</p><h3>企業価値向上</h3><p>社会性のある会社として選ばれる</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ 比較表 -->
+<section class="section modern">
+  <div class="wrap">
+    <p class="m-eyebrow">DIFFERENCE</p>
+    <h2 class="m-h2">従来の福利厚生との、決定的な違い。</h2>
+    <p class="m-lead">福利厚生の概念が変わる。もう福利厚生ではなく、人生支援プラットフォームです。</p>
+    <div style="overflow-x:auto">
+    <table class="cmp">
+      <thead><tr><th></th><th>従来の福利厚生</th><th class="new-h">REALIZE CLUB</th></tr></thead>
+      <tbody>
+        <tr><th>目的</th><td class="old">娯楽・割引</td><td class="new">人生全体最適</td></tr>
+        <tr><th>対象</th><td class="old">一部社員</td><td class="new">全社員対象</td></tr>
+        <tr><th>効果</th><td class="old">一時的満足</td><td class="new">人生100年時代の幸せ</td></tr>
+        <tr><th>支援</th><td class="old">部分最適</td><td class="new">準備と対策</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- ⑨ 料金 -->
+<section class="section alt">
+  <div class="wrap">
+    <div class="price">
+      <p class="m-eyebrow" style="color:var(--mustard)">PRICE</p>
+      <h2>コーヒー1杯分の値段で、<br>社員の人生不安を解消。</h2>
+      <p class="copy">それくらい自信があります。</p>
+      <ul>
+        <li>いつでも解約可能</li>
+        <li>システム導入費用は補助金対象プランあり</li>
+        <li>全社員対象で、一部社員だけの特典にしない</li>
+      </ul>
+      <a class="btn btn-primary" href="#final">導入条件を問い合わせる</a>
+    </div>
+  </div>
+</section>
+
+<!-- ⑩ 会社情報 -->
+<section class="company modern">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <b>株式会社REALIZE OS</b><br>
+        〒160-0022 東京都新宿区1丁目36番地7号 新宿内野ビル Ⅱ 8F<br>
+        TEL：03-6380-5978　FAX：03-6380-5972
+      </div>
+      <div>
+        社員が安心すると、家庭が安心する。家庭が安心すると、仕事に集中できる。社員の成長が、企業の成長につながる。REALIZE CLUBは、社員の人生を支え、企業の未来を育てる人生支援プラットフォームです。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑪ 最終CTA -->
+<section class="final" id="final">
+  <div class="wrap">
+    <p class="m-eyebrow">CONTACT</p>
+    <h2 class="m-h2">人生を、なんとなくで<br>終わらせない。</h2>
+    <p class="m-lead">個人任せにしない、社員の未来を守る会社へ。まずは資料請求・無料相談から、REALIZE CLUBをご検討ください。</p>
+    <a class="btn btn-primary" href="mailto:info@realize-os.co.jp?subject=REALIZE%20CLUB%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B">資料請求・無料相談を申し込む</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 株式会社REALIZE OS. REALIZE CLUB — 人生を、なんとなくで終わらせない。</p>
+</footer>
+
+</body></html>
