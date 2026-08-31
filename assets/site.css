@@ -1,0 +1,93 @@
+/* ===== REALIZE CLUB — 共通スタイル（トークン／ヘッダー／ボタン／フッター） ===== */
+:root{
+  --showa-bg:#ede1c8;--showa-bg2:#e4d5b0;--showa-ink:#3b2a1e;--showa-line:#c9a55c;
+  --green:#2f4a3e;--green-d:#233b31;--enji:#8a3324;--mustard:#c98a2b;
+  --paper:#f6efe0;
+  --modern-bg:#faf9f6;--modern-ink:#22282a;--modern-muted:#6b7278;--modern-line:#e4e1d8;
+  --accent:#2f4a3e;--accent-l:#4c715f;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--modern-bg);color:var(--modern-ink);
+  font-family:"Noto Sans JP",sans-serif;line-height:1.8;-webkit-text-size-adjust:100%}
+h1,h2,h3,.mincho{font-family:"Shippori Mincho B1",serif}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.eyebrow{display:inline-block;font-size:.72rem;letter-spacing:.32em;font-weight:700}
+
+/* ヘッダー */
+.siteheader{position:sticky;top:0;z-index:50;background:var(--green);color:#fff;
+  box-shadow:0 4px 18px #0002}
+.siteheader .in{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:14px 24px;max-width:1080px;margin:0 auto}
+.siteheader .logo{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.1rem;
+  letter-spacing:.06em;color:#fff;text-decoration:none;white-space:nowrap}
+.siteheader .logo span{color:var(--mustard)}
+.siteheader .ctas{display:flex;gap:8px}
+.siteheader .cta{font-weight:700;font-size:.78rem;padding:9px 14px;border-radius:3px;
+  text-decoration:none;letter-spacing:.02em;white-space:nowrap}
+.siteheader .cta.doc{background:var(--mustard);color:#2a1c0c}
+.siteheader .cta.talk{background:transparent;color:#fff;border:1px solid #ffffff70}
+
+/* ボタン */
+.btn{display:inline-block;font-weight:700;padding:15px 30px;border-radius:3px;text-decoration:none;
+  font-size:.95rem;letter-spacing:.03em;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--enji);color:#fff;box-shadow:0 8px 20px #8a332440}
+.btn-secondary{background:var(--green-d);color:#fff;box-shadow:0 8px 20px #233b3140}
+.btn-ghost{background:transparent;border:2px solid var(--green-d);color:var(--green-d)}
+
+/* モダン見出し（共通） */
+.modern{background:var(--modern-bg)}
+.section{padding:76px 0}
+.section.alt{background:#fff;border-top:1px solid var(--modern-line);border-bottom:1px solid var(--modern-line)}
+.m-eyebrow{color:var(--accent);letter-spacing:.28em;font-size:.72rem;font-weight:700}
+.m-h2{font-size:clamp(1.5rem,3.2vw,2.15rem);margin:.35em 0 .5em;color:var(--modern-ink);font-weight:900}
+.m-lead{color:var(--modern-muted);max-width:640px;font-size:1rem;margin:0 0 44px}
+
+/* フッター */
+footer{background:var(--green-d);color:#cfd8d0;padding:26px 0;font-size:.76rem}
+footer .footer-in{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;text-align:center}
+footer .home-btn{display:inline-flex;align-items:center;gap:6px;color:#fff;font-weight:700;
+  text-decoration:none;border:1px solid #ffffff40;border-radius:20px;padding:7px 16px;font-size:.74rem}
+footer .home-btn:hover{border-color:#ffffff90}
+
+@media(max-width:560px){
+  .siteheader .logo{font-size:.95rem}
+  .siteheader .cta{padding:8px 12px;font-size:.72rem}
+}
+
+/* ===== フォームページ共通（資料請求／無料相談） ===== */
+.page-hero{padding:64px 0 40px;border-bottom:6px solid var(--enji);position:relative;
+  background-color:var(--showa-bg);
+  background-image:radial-gradient(ellipse at 20% -10%, #ffffff55 0%, transparent 45%),
+    repeating-linear-gradient(0deg, #00000006 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, #00000005 0 1px, transparent 1px 3px);
+  color:var(--showa-ink)}
+.page-hero .eyebrow{color:var(--enji);margin-bottom:12px}
+.page-hero h1{font-size:clamp(1.8rem,4.6vw,2.7rem);margin:0 0 16px;color:var(--green-d)}
+.page-hero p{font-size:1rem;color:#5a4324;max-width:600px;margin:0}
+
+.form-wrap{padding:56px 0 90px}
+.form-card{max-width:640px;margin:0 auto;background:#fff;border:1px solid var(--modern-line);
+  border-radius:14px;padding:40px 36px;box-shadow:0 16px 40px #22282a0f}
+.field{margin-bottom:20px}
+.field label{display:block;font-size:.84rem;font-weight:700;color:var(--modern-ink);margin-bottom:7px}
+.field label .req{color:var(--enji);font-weight:700;margin-left:4px;font-size:.74rem}
+.field input,.field textarea,.field select{width:100%;border:1px solid var(--modern-line);
+  border-radius:8px;padding:12px 14px;font:inherit;font-size:.92rem;color:var(--modern-ink);
+  background:var(--modern-bg)}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--accent-l);outline-offset:1px}
+.field textarea{resize:vertical;min-height:96px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-actions{margin-top:28px}
+.form-actions .btn{width:100%;text-align:center;border:0;cursor:pointer}
+.form-note{margin:14px 0 0;font-size:.78rem;color:var(--modern-muted);text-align:center}
+.cross-link{text-align:center;margin-top:26px;font-size:.86rem;color:var(--modern-muted)}
+.cross-link a{color:var(--accent);font-weight:700;text-decoration:underline}
+
+@media(max-width:560px){
+  .field-row{grid-template-columns:1fr}
+  .form-card{padding:30px 22px}
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="REALIZE CLUBのサービス資料を無料でお送りします。">
+<meta name="theme-color" content="#2f4a3e">
+<title>資料請求 | REALIZE CLUB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+
+<body>
+
+<header class="siteheader">
+  <div class="in">
+    <a class="logo" href="realize-club.html">REALIZE <span>CLUB</span></a>
+    <div class="ctas">
+      <a class="cta doc" href="document-request.html">資料請求</a>
+      <a class="cta talk" href="consultation.html">無料相談</a>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">DOCUMENT REQUEST</p>
+    <h1>資料請求</h1>
+    <p>サービス概要、導入企業が得られる5つの価値、料金プランをまとめた資料を無料でお送りします。下記フォームにご入力のうえ、送信してください。</p>
+  </div>
+</section>
+
+<section class="form-wrap modern">
+  <div class="wrap">
+    <form class="form-card" id="doc-form">
+      <div class="field-row">
+        <div class="field">
+          <label for="company">会社名<span class="req">必須</span></label>
+          <input type="text" id="company" name="company" required autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="name">ご担当者名<span class="req">必須</span></label>
+          <input type="text" id="name" name="name" required autocomplete="name">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="email">メールアドレス<span class="req">必須</span></label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="tel">電話番号</label>
+          <input type="tel" id="tel" name="tel" autocomplete="tel">
+        </div>
+      </div>
+      <div class="field">
+        <label for="employees">従業員数</label>
+        <select id="employees" name="employees">
+          <option value="">選択してください</option>
+          <option>1〜9名</option>
+          <option>10〜49名</option>
+          <option>50〜99名</option>
+          <option>100〜299名</option>
+          <option>300名以上</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">ご質問・ご要望（任意）</label>
+        <textarea id="message" name="message" placeholder="気になる点があればご記入ください"></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">資料請求を送信する</button>
+      </div>
+      <p class="form-note">送信すると、入力内容を記載したメールがお使いのメールソフトで作成されます。内容をご確認のうえ、送信してください。</p>
+    </form>
+    <p class="cross-link">まずは話を聞いてみたい方は <a href="consultation.html">無料相談はこちら</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-in">
+    <a class="home-btn" href="realize-club.html">↑ ホームへ戻る</a>
+    <p style="margin:0">© 株式会社REALIZE OS. REALIZE CLUB — 人生を、なんとなくで終わらせない。</p>
+  </div>
+</footer>
+
+<script>
+document.getElementById('doc-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var f = e.target;
+  var lines = [
+    '会社名：' + f.company.value,
+    'ご担当者名：' + f.name.value,
+    'メールアドレス：' + f.email.value,
+    '電話番号：' + (f.tel.value || '未記入'),
+    '従業員数：' + (f.employees.value || '未記入'),
+    'ご質問・ご要望：' + (f.message.value || 'なし')
+  ];
+  var subject = encodeURIComponent('【資料請求】REALIZE CLUB');
+  var body = encodeURIComponent(lines.join('\n'));
+  window.location.href = 'mailto:info@realize-os.co.jp?subject=' + subject + '&body=' + body;
+});
+</script>
+
+</body></html>

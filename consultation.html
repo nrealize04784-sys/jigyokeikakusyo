@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="REALIZE CLUBの無料相談（オンライン30分）を予約できます。">
+<meta name="theme-color" content="#2f4a3e">
+<title>無料相談 | REALIZE CLUB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+
+<body>
+
+<header class="siteheader">
+  <div class="in">
+    <a class="logo" href="realize-club.html">REALIZE <span>CLUB</span></a>
+    <div class="ctas">
+      <a class="cta doc" href="document-request.html">資料請求</a>
+      <a class="cta talk" href="consultation.html">無料相談</a>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">FREE CONSULTATION</p>
+    <h1>無料相談</h1>
+    <p>導入効果や料金、貴社に合った進め方について、オンラインで30分程度の無料相談を承ります。下記フォームにご入力のうえ、送信してください。</p>
+  </div>
+</section>
+
+<section class="form-wrap modern">
+  <div class="wrap">
+    <form class="form-card" id="talk-form">
+      <div class="field-row">
+        <div class="field">
+          <label for="company">会社名<span class="req">必須</span></label>
+          <input type="text" id="company" name="company" required autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="name">ご担当者名<span class="req">必須</span></label>
+          <input type="text" id="name" name="name" required autocomplete="name">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="email">メールアドレス<span class="req">必須</span></label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="tel">電話番号<span class="req">必須</span></label>
+          <input type="tel" id="tel" name="tel" required autocomplete="tel">
+        </div>
+      </div>
+      <div class="field">
+        <label for="datetime">希望日時（第一〜第二希望）</label>
+        <input type="text" id="datetime" name="datetime" placeholder="例：9月10日(水) 14:00〜、9月11日(木) 終日可">
+      </div>
+      <div class="field">
+        <label for="message">ご相談内容（任意）</label>
+        <textarea id="message" name="message" placeholder="現在の福利厚生の課題など、事前に共有したいことがあればご記入ください"></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">無料相談を申し込む</button>
+      </div>
+      <p class="form-note">送信すると、入力内容を記載したメールがお使いのメールソフトで作成されます。内容をご確認のうえ、送信してください。折り返し日程をご案内します。</p>
+    </form>
+    <p class="cross-link">まずは資料で概要を知りたい方は <a href="document-request.html">資料請求はこちら</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-in">
+    <a class="home-btn" href="realize-club.html">↑ ホームへ戻る</a>
+    <p style="margin:0">© 株式会社REALIZE OS. REALIZE CLUB — 人生を、なんとなくで終わらせない。</p>
+  </div>
+</footer>
+
+<script>
+document.getElementById('talk-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var f = e.target;
+  var lines = [
+    '会社名：' + f.company.value,
+    'ご担当者名：' + f.name.value,
+    'メールアドレス：' + f.email.value,
+    '電話番号：' + f.tel.value,
+    '希望日時：' + (f.datetime.value || '未記入'),
+    'ご相談内容：' + (f.message.value || 'なし')
+  ];
+  var subject = encodeURIComponent('【無料相談申込】REALIZE CLUB');
+  var body = encodeURIComponent(lines.join('\n'));
+  window.location.href = 'mailto:info@realize-os.co.jp?subject=' + subject + '&body=' + body;
+});
+</script>
+
+</body></html>

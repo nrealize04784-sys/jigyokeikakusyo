@@ -7,24 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
 <style>
-:root{
-  --showa-bg:#ede1c8;--showa-bg2:#e4d5b0;--showa-ink:#3b2a1e;--showa-line:#c9a55c;
-  --green:#2f4a3e;--green-d:#233b31;--enji:#8a3324;--mustard:#c98a2b;
-  --paper:#f6efe0;
-  --modern-bg:#faf9f6;--modern-ink:#22282a;--modern-muted:#6b7278;--modern-line:#e4e1d8;
-  --accent:#2f4a3e;--accent-l:#4c715f;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--modern-bg);color:var(--modern-ink);
-  font-family:"Noto Sans JP",sans-serif;line-height:1.8;-webkit-text-size-adjust:100%}
-h1,h2,h3,.mincho{font-family:"Shippori Mincho B1",serif}
-img{max-width:100%;display:block}
-a{color:inherit}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-.eyebrow{display:inline-block;font-size:.72rem;letter-spacing:.32em;font-weight:700}
-
 /* ===== 共通:昭和トーンの背景テクスチャ ===== */
 .showa{
   background-color:var(--showa-bg);
@@ -35,17 +19,6 @@ a{color:inherit}
   color:var(--showa-ink);
 }
 .showa .eyebrow{color:var(--enji)}
-
-/* ===== ヘッダー ===== */
-.siteheader{position:sticky;top:0;z-index:50;background:var(--green);color:#fff;
-  box-shadow:0 4px 18px #0002}
-.siteheader .in{display:flex;align-items:center;justify-content:space-between;
-  padding:14px 24px;max-width:1080px;margin:0 auto}
-.siteheader .logo{font-family:"Shippori Mincho B1",serif;font-weight:800;font-size:1.1rem;
-  letter-spacing:.06em;color:#fff;text-decoration:none}
-.siteheader .logo span{color:var(--mustard)}
-.siteheader .cta{background:var(--mustard);color:#2a1c0c;font-weight:700;font-size:.82rem;
-  padding:10px 18px;border-radius:3px;text-decoration:none;letter-spacing:.03em;white-space:nowrap}
 
 /* ===== ① HERO（昭和ポスター調） ===== */
 .hero{position:relative;padding:78px 0 92px;overflow:hidden;border-bottom:6px solid var(--enji)}
@@ -70,11 +43,6 @@ a{color:inherit}
 .hero h1 em{display:block;font-style:normal;color:var(--enji)}
 .hero .sub{font-size:clamp(1rem,2vw,1.25rem);font-weight:700;color:#5a4324;margin:0 0 30px}
 .hero .ctarow{display:flex;flex-wrap:wrap;gap:14px}
-.btn{display:inline-block;font-weight:700;padding:15px 30px;border-radius:3px;text-decoration:none;
-  font-size:.95rem;letter-spacing:.03em;transition:transform .15s}
-.btn:hover{transform:translateY(-2px)}
-.btn-primary{background:var(--enji);color:#fff;box-shadow:0 8px 20px #8a332440}
-.btn-ghost{background:transparent;border:2px solid var(--green-d);color:var(--green-d)}
 .hero .badge{margin-top:34px;display:flex;flex-wrap:wrap;gap:10px 22px;font-size:.78rem;
   color:#6b5636;font-weight:700}
 .hero .badge b{color:var(--green-d)}
@@ -119,12 +87,6 @@ a{color:inherit}
 
 /* ===== ここからモダントーンへ ===== */
 .modern-transition{height:64px;background:linear-gradient(180deg,var(--paper),var(--modern-bg))}
-.modern{background:var(--modern-bg)}
-.section{padding:76px 0}
-.section.alt{background:#fff;border-top:1px solid var(--modern-line);border-bottom:1px solid var(--modern-line)}
-.m-eyebrow{color:var(--accent);letter-spacing:.28em;font-size:.72rem;font-weight:700}
-.m-h2{font-size:clamp(1.5rem,3.2vw,2.15rem);margin:.35em 0 .5em;color:var(--modern-ink);font-weight:900}
-.m-lead{color:var(--modern-muted);max-width:640px;font-size:1rem;margin:0 0 44px}
 
 /* 6ステップ */
 .step-flow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
@@ -194,9 +156,7 @@ a{color:inherit}
 .final{padding:90px 0;text-align:center;background:linear-gradient(180deg,#fff,var(--modern-bg))}
 .final .m-h2{margin-bottom:.3em}
 .final .m-lead{margin-left:auto;margin-right:auto}
-.final .btn-primary{background:var(--enji)}
-
-footer{background:var(--green-d);color:#cfd8d0;padding:30px 0;font-size:.76rem;text-align:center}
+.final .ctarow{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
 
 /* ===== レスポンシブ ===== */
 @media(max-width:880px){
@@ -214,8 +174,6 @@ footer{background:var(--green-d);color:#cfd8d0;padding:30px 0;font-size:.76rem;t
 }
 @media(max-width:560px){
   .anx-grid,.friction-grid,.value5,.step-flow,.steps4{grid-template-columns:1fr}
-  .siteheader .logo{font-size:.95rem}
-  .siteheader .cta{padding:9px 14px;font-size:.76rem}
   .hero .frame{padding:34px 20px}
   .price{padding:38px 22px}
 }
@@ -226,7 +184,10 @@ footer{background:var(--green-d);color:#cfd8d0;padding:30px 0;font-size:.76rem;t
 <header class="siteheader">
   <div class="in">
     <a class="logo" href="#top">REALIZE <span>CLUB</span></a>
-    <a class="cta" href="#final">資料請求・無料相談</a>
+    <div class="ctas">
+      <a class="cta doc" href="document-request.html">資料請求</a>
+      <a class="cta talk" href="consultation.html">無料相談</a>
+    </div>
   </div>
 </header>
 
@@ -238,7 +199,7 @@ footer{background:var(--green-d);color:#cfd8d0;padding:30px 0;font-size:.76rem;t
       <h1>会社が、<br>社員の人生を守る<em>時代へ。</em></h1>
       <p class="sub">社員のライフリテラシーを育てる、人生支援プラットフォーム。</p>
       <div class="ctarow">
-        <a class="btn btn-primary" href="#final">資料請求はこちら</a>
+        <a class="btn btn-primary" href="document-request.html">資料請求はこちら</a>
         <a class="btn btn-ghost" href="#solution">サービス概要を見る</a>
       </div>
       <div class="badge">
@@ -450,7 +411,10 @@ footer{background:var(--green-d);color:#cfd8d0;padding:30px 0;font-size:.76rem;t
         <li>システム導入費用は補助金対象プランあり</li>
         <li>全社員対象で、一部社員だけの特典にしない</li>
       </ul>
-      <a class="btn btn-primary" href="#final">導入条件を問い合わせる</a>
+      <div class="ctarow" style="justify-content:center">
+        <a class="btn btn-primary" href="document-request.html">資料請求はこちら</a>
+        <a class="btn btn-secondary" href="consultation.html">無料相談で導入条件を聞く</a>
+      </div>
     </div>
   </div>
 </section>
@@ -477,12 +441,18 @@ footer{background:var(--green-d);color:#cfd8d0;padding:30px 0;font-size:.76rem;t
     <p class="m-eyebrow">CONTACT</p>
     <h2 class="m-h2">人生を、なんとなくで<br>終わらせない。</h2>
     <p class="m-lead">個人任せにしない、社員の未来を守る会社へ。まずは資料請求・無料相談から、REALIZE CLUBをご検討ください。</p>
-    <a class="btn btn-primary" href="mailto:info@realize-os.co.jp?subject=REALIZE%20CLUB%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B">資料請求・無料相談を申し込む</a>
+    <div class="ctarow">
+      <a class="btn btn-primary" href="document-request.html">資料請求はこちら</a>
+      <a class="btn btn-secondary" href="consultation.html">無料相談を予約する</a>
+    </div>
   </div>
 </section>
 
 <footer>
-  <p>© 株式会社REALIZE OS. REALIZE CLUB — 人生を、なんとなくで終わらせない。</p>
+  <div class="wrap footer-in">
+    <a class="home-btn" href="#top">↑ ホームへ戻る</a>
+    <p style="margin:0">© 株式会社REALIZE OS. REALIZE CLUB — 人生を、なんとなくで終わらせない。</p>
+  </div>
 </footer>
 
 </body></html>
