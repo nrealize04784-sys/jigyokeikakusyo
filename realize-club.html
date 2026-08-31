@@ -51,6 +51,7 @@ a{color:inherit}
 .hero{position:relative;padding:78px 0 92px;overflow:hidden;border-bottom:6px solid var(--enji)}
 .hero:before{content:"";position:absolute;right:-8%;top:-18%;width:60vmin;height:60vmin;
   border-radius:50%;background:radial-gradient(circle,#c9832688 0%,#c9832600 68%)}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:44px;align-items:center}
 .hero .frame{border:2px solid var(--showa-line);padding:46px 34px;position:relative;
   background:#f6efe0cc}
 .hero .frame:before,.hero .frame:after{content:"";position:absolute;width:26px;height:26px;
@@ -58,6 +59,13 @@ a{color:inherit}
 .hero .frame:before{top:-10px;left:-10px;border-right:0;border-bottom:0}
 .hero .frame:after{bottom:-10px;right:-10px;border-left:0;border-top:0}
 .hero .eyebrow{color:var(--enji);margin-bottom:14px}
+.hero-visual{position:relative}
+.hero-visual .picframe{position:relative;border:10px solid var(--paper);
+  box-shadow:0 18px 46px #3b2a1e33,0 0 0 2px var(--showa-line);background:var(--paper)}
+.hero-visual img{width:100%;display:block}
+.hero-visual .tag{position:absolute;left:-14px;bottom:22px;background:var(--enji);color:#fff;
+  font-weight:700;font-size:.72rem;letter-spacing:.1em;padding:9px 16px;
+  box-shadow:0 6px 16px #0003;transform:rotate(-3deg)}
 .hero h1{font-size:clamp(2rem,5.4vw,3.4rem);line-height:1.35;margin:0 0 20px;color:var(--green-d)}
 .hero h1 em{display:block;font-style:normal;color:var(--enji)}
 .hero .sub{font-size:clamp(1rem,2vw,1.25rem);font-weight:700;color:#5a4324;margin:0 0 30px}
@@ -194,6 +202,8 @@ footer{background:var(--green-d);color:#cfd8d0;padding:30px 0;font-size:.76rem;t
 @media(max-width:880px){
   .anx-grid,.friction-grid,.value5,.step-flow{grid-template-columns:repeat(2,1fr)}
   .steps4{grid-template-columns:repeat(2,1fr)}
+  .hero-grid{grid-template-columns:1fr;gap:30px}
+  .hero-visual{max-width:340px;margin:0 auto}
   .era-grid{grid-template-columns:1fr}
   .era-col.new{border-left:0;border-top:1px dashed var(--showa-line)}
   .ai-wrap{grid-template-columns:1fr}
@@ -222,7 +232,7 @@ footer{background:var(--green-d);color:#cfd8d0;padding:30px 0;font-size:.76rem;t
 
 <!-- ① HERO -->
 <section class="hero showa" id="top">
-  <div class="wrap">
+  <div class="wrap hero-grid">
     <div class="frame">
       <p class="eyebrow">REALIZE CLUB ｜ 人生支援プラットフォーム</p>
       <h1>会社が、<br>社員の人生を守る<em>時代へ。</em></h1>
@@ -236,6 +246,12 @@ footer{background:var(--green-d);color:#cfd8d0;padding:30px 0;font-size:.76rem;t
         <span><b>補助金対象プラン</b>あり</span>
         <span><b>導入企業の5つの効果</b>を実感</span>
       </div>
+    </div>
+    <div class="hero-visual">
+      <div class="picframe">
+        <img src="assets/hero-showa.jpg" alt="昭和レトロな酒場で笑顔でビールを掲げる女性のイラスト">
+      </div>
+      <p class="tag">今日も一日、おつかれさまです。</p>
     </div>
   </div>
 </section>
