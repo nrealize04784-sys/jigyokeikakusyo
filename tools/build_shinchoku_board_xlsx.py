@@ -64,8 +64,8 @@ def dv(ws,kind,rng_,f1,title,prompt,blank=False):
 # ================================================== LP
 ws=wb.active; ws.title="LP"
 HEAD=["案件","LP名","デザインの方向","原稿・デザイン","問い合わせ導線","本番公開",
-      "本番URL（記入欄）","残っていること","資料請求ページ","会社概要ページ","LPプレビュー","ID","更新日"]
-W=[24,30,32,14,15,11,34,52,26,26,26,10,11]
+      "本番URL（記入欄）","残っていること","更新日"]
+W=[24,32,34,14,15,11,36,58,11]
 sheet_header(ws,"制作進捗ボード ─ LP",
   "これまでに作った11本のLP。実物を1ページずつ読んで確認したもの。調査日 2026-09-03",
   "水色のセルはクリックすると▼が出て選べます。黄色のG列にURLを入れると、本番公開が自動で○になります。")
@@ -74,61 +74,51 @@ HR=5; write_head(ws,HR,HEAD,W)
 lp=[
 ("REALIZE CLUB（法人向け）","会社が、社員の人生を守る時代へ。","深緑 × 和モダン／昭和と令和の対比","○","△",
  "送信ボタンがメーラーを開くだけ。受付フォームの実装が必要／会社概要ページが未作成／本番ドメインへの公開",
- A+"b41aa6c8-3939-483e-9cf4-c92b3290ec3c","",A+"08b479a1-0803-4978-989b-dfbb853c3e95","08b479a1","2026-09-03"),
+ "2026-09-03"),
 ("REALIZE CLUB（法人向け）","会社が社員の人生を支える時代へ","星空タウン／クリーム × 濃紺のイラスト","○","△",
  "3ページ揃っている唯一のRC案。採用するかの判断／送信はメーラー起動のみ",
- A+"4e88d497-2710-4ece-9972-60aabc2da022",A+"c5af6a39-a1ec-47e7-a2dd-652458d7fd69",A+"7355f424-d6c3-47fb-88a4-a9cfc890f07e","7355f424","2026-08-31"),
+ "2026-08-31"),
 ("REALIZE CLUB（法人向け）","困る前に、灯す。","漆黒 × 炎のグラデーション","○","×",
  "kaisha.html ほかへの相対リンクが残り、単体では飛べない／会社概要ページの作成",
- "（同ファイル内）","",A+"ded9a489-7357-4ed8-80a0-e012da4aaec4","ded9a489","2026-08-31"),
+ "2026-08-31"),
 ("REALIZE CLUB（法人向け）","その安心、今がお得。","スーパーの特売ポップ／白地に赤と黄","○","×",
  "リンクがすべてページ内アンカー。外部への導線が1本もない／会社概要ページ、送信先の設定",
- "（同ページ内フォーム）","",A+"4ce48691-4c9a-46fb-bbd2-e375366bc5ab","4ce48691","2026-08-31"),
+ "2026-08-31"),
 ("REALIZE CLUB（法人向け）","社員が、溶けていく前に。","アイスのメタファー／手描き風","○","×",
  "会社概要ページが未作成／送信はメーラー起動のみ",
- A+"a631f99f-f0e8-4bc0-8f78-67f01132ed31","",A+"b0f16478-7326-4826-88ce-4aa0230fbcae","b0f16478","2026-08-28"),
+ "2026-08-28"),
 ("LIFE MAKE PARTNERS（加盟店募集）","家より先に、人生の話を。","韓国料理店の看板／木の壁 × 生成りの横断幕","○","○",
  "本番ドメインへの公開だけが残り。問い合わせはLINE公式（lin.ee/WHYApuM）に集約済み",
- A+"00bc4beb-3bef-4d45-a94b-90c693a3c746",A+"5d670aad-cdef-49f7-bf67-38b65e8c396e",A+"7f212d2f-1999-4a55-ba64-865fbcc1b6bf","7f212d2f","2026-09-03"),
+ "2026-09-03"),
 ("LIFE MAKE PARTNERS（加盟店募集）","いつも同じ集客ばっかやってんじゃねぇ！","喝・挑発ポスター／赤と黄の斜めストライプ","○","×",
  "kaisha-katsu.html ほかへの相対リンクが残り飛べない／行き先が「#」のままのボタンが2つ",
- "（同ページ内フォーム）","",A+"db82fc95-4c62-4b83-b22c-e7cee86bc870","db82fc95","2026-08-28"),
+ "2026-08-28"),
 ("LIFE MAKE PARTNERS（加盟店募集）","加盟資格は、人生への愛。ただそれだけ。","星空タウン／RC星空案と同じ世界観","○","△",
  "行き先が「#」のままのボタンが2つ／統廃合の判断",
- A+"32b51fff-748e-4fb3-a257-99531381bd35",A+"cb3eacf9-1c9d-4722-a6d0-a599ed2fe3f5",A+"65b43069-9f73-4f01-881f-70c31cd5cc30","65b43069","2026-08-24"),
+ "2026-08-24"),
 ("まちの相談窓口","不動産屋が、まちの相談窓口になる。","銭湯ポスター（リソグラフ2色刷り）／LINE誘導版","○","△",
  "行き先が「#」のままのリンクが2つ残っている／本番ドメインへの公開",
- A+"dec5629a-75b7-4a8d-ba24-a6e1b428c0d3",A+"0d2281f1-4a5f-4592-a013-1b5710b515b4",A+"1a259364-2cf9-4098-b864-bde6880ad6bf","1a259364","2026-09-03"),
+ "2026-09-03"),
 ("まちの相談窓口","まちの相談窓口（フォーム版）","銭湯ポスター／申込フォーム内蔵","○","△",
  "LINE誘導版に置き換わっている。残すか消すかの判断",
- A+"dec5629a-75b7-4a8d-ba24-a6e1b428c0d3",A+"0d2281f1-4a5f-4592-a013-1b5710b515b4",A+"39f0d878-53ee-4d73-9625-e9ce060b7aa8","39f0d878","2026-08-20"),
+ "2026-08-20"),
 ("不動産FC加盟","収益が積み上がる不動産FC加盟へ。","ボクシング／黒地 × 赤とゴールド","○","×",
  "ページのタイトルタグが空。共有すると名前なしで出る／資料請求・会社概要ページ、送信先の設定",
- "（同ページ内フォーム）","",A+"d5160792-9b05-48a1-aa52-e88cff874321","d5160792","2026-08-19"),
+ "2026-08-19"),
 ]
-
-def link(cell,url,label):
-    cell.value=label
-    if url.startswith("http"):
-        cell.hyperlink=url; cell.font=Font(name=F,size=9,color=ACC,underline="single")
-    else:
-        cell.font=Font(name=F,size=9,color=GREY)
 
 for n,r in enumerate(lp):
     ex=HR+1+n
-    anken,name,d,s1,s3,todo,doc,comp,prev,aid,upd=r
-    for col,val in ((1,anken),(2,name),(3,d),(4,s1),(5,s3),(8,todo),(12,aid),(13,upd)):
+    anken,name,d,s1,s3,todo,upd=r
+    for col,val in ((1,anken),(2,name),(3,d),(4,s1),(5,s3),(8,todo),(9,upd)):
         ws.cell(row=ex,column=col,value=val)
     ws.cell(row=ex,column=6,value='=IF(G{0}="","×","○")'.format(ex))
-    link(ws.cell(row=ex,column=9),doc,"資料請求を開く" if doc.startswith("http") else doc)
-    link(ws.cell(row=ex,column=10),comp,"会社概要を開く" if comp.startswith("http") else "未作成")
-    link(ws.cell(row=ex,column=11),prev,"LPを開く")
     ws.row_dimensions[ex].height=46
     for col in range(1,len(HEAD)+1):
         c=ws.cell(row=ex,column=col); c.border=box
-        if col not in (9,10,11): c.font=Font(name=F,size=9,color=INK)
+        c.font=Font(name=F,size=9,color=INK)
         c.alignment=Alignment(vertical="center",wrap_text=(col in (1,2,3,8)),
-                              horizontal="center" if col in (4,5,6,13) else "left")
+                              horizontal="center" if col in (4,5,6,9) else "left")
         if n%2==1 and col!=7: c.fill=PatternFill("solid",fgColor=BAND)
     for col in (1,4,5):
         ws.cell(row=ex,column=col).fill=PatternFill("solid",fgColor=EDIT)
@@ -157,7 +147,7 @@ c=ws.cell(row=tot,column=7,value='=COUNTA(G{0}:G{1})&" 本 公開ずみ"'.format
 c.font=Font(name=F,size=9,bold=True,color=ACC)
 for col in range(3,8):
     ws.cell(row=tot,column=col).border=Border(top=Side(style="medium",color=ACC))
-ws.freeze_panes="C6"; ws.auto_filter.ref="A{0}:M{1}".format(HR,last); ws.sheet_view.showGridLines=False
+ws.freeze_panes="C6"; ws.auto_filter.ref="A{0}:I{1}".format(HR,last); ws.sheet_view.showGridLines=False
 
 # ================================================== タスクシート
 THEAD=["何を作るか／するか","どこで使う","担当","進捗","状態","URL記入欄","メモ"]
