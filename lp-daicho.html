@@ -181,6 +181,69 @@ tbody tr.hot td{background:linear-gradient(90deg,var(--gap-bg) 0 3px,transparent
 footer{margin-top:26px;font-size:11.5px;color:var(--ink-3);border-top:1px solid var(--rule);
   padding-top:14px;max-width:72ch}
 footer p{margin:0 0 6px}
+
+/* ---------- クリックで開く編集・絞り込み ---------- */
+.offline-note{border:1px solid var(--rule);background:var(--panel);padding:10px 14px;
+  margin:0 0 16px;font-size:12px;color:var(--ink-2)}
+.editable{cursor:pointer;position:relative}
+.editable:hover{background:var(--accent-soft)}
+.editable:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.editable::after{content:"変更";position:absolute;right:8px;top:10px;font-size:9.5px;
+  font-family:var(--mono);letter-spacing:.08em;color:var(--accent);opacity:0}
+.editable:hover::after,.editable:focus-visible::after{opacity:1}
+.edited{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  color:var(--accent);border:1px solid var(--accent);border-radius:2px;padding:0 4px;margin-top:4px}
+
+th.filterable{cursor:pointer;user-select:none}
+th.filterable:hover{color:var(--accent)}
+th.filterable:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+th.filterable .caret{margin-left:5px;font-size:9px;color:var(--ink-3)}
+th.filterable.on{color:var(--accent)}
+th.filterable.on .caret{color:var(--accent)}
+.filterbar{display:none;gap:8px;flex-wrap:wrap;align-items:center;
+  padding:9px 12px;border:1px solid var(--accent);border-bottom:0;background:var(--accent-soft);
+  font-size:11.5px;color:var(--accent)}
+.filterbar.on{display:flex}
+.filterbar .tag{font-family:var(--mono);font-size:10.5px;background:var(--panel);
+  border:1px solid var(--accent);border-radius:2px;padding:1px 7px}
+.filterbar button{font-family:var(--body);font-size:11px;font-weight:700;color:var(--accent);
+  background:transparent;border:1px solid var(--accent);border-radius:2px;padding:2px 9px;cursor:pointer}
+.filterbar button:hover{background:var(--panel)}
+.norows td{padding:22px 14px;color:var(--ink-3);font-size:12.5px;text-align:center}
+
+.pop{position:fixed;z-index:80;background:var(--panel);border:1px solid var(--accent);
+  box-shadow:0 14px 34px rgba(20,24,30,.22);padding:14px 16px;min-width:270px;max-width:320px}
+.pop h4{font-family:var(--disp);font-size:13px;font-weight:800;margin:0 0 3px;letter-spacing:.03em;color:var(--ink)}
+.pop .sub{font-size:11px;color:var(--ink-3);margin:0 0 12px}
+.pop .row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.pop input[type=range]{flex:1;accent-color:var(--accent);height:20px}
+.pop .val{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--ink);
+  min-width:52px;text-align:right;font-variant-numeric:tabular-nums}
+.seg{display:flex;gap:4px;margin-bottom:12px}
+.seg button{flex:1;font-family:var(--body);font-size:11.5px;font-weight:700;padding:6px 4px;
+  border:1px solid var(--rule);background:var(--panel-2);color:var(--ink-2);border-radius:2px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.steprow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-bottom:8px}
+.steprow .lb{font-size:11.5px;color:var(--ink-2)}
+.steprow .seg{margin:0;width:112px}
+.steprow .seg button{font-size:12px;padding:3px 0}
+.steprow.locked .lb{color:var(--ink-3)}
+.steprow.locked .seg button{opacity:.5;cursor:default}
+.pop .acts{display:flex;gap:6px;margin-top:12px;border-top:1px solid var(--rule-soft);padding-top:11px}
+.pop .acts button{font-family:var(--body);font-size:11.5px;font-weight:700;border-radius:2px;
+  padding:6px 12px;cursor:pointer;border:1px solid var(--accent)}
+.pop .acts .save{background:var(--accent);color:var(--panel)}
+.pop .acts .ghost{background:transparent;color:var(--accent)}
+.pop .acts .reset{margin-left:auto;border-color:var(--rule);color:var(--ink-3);background:transparent}
+.pop .acts button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.pop .opts{max-height:230px;overflow-y:auto;margin:0 0 4px;padding:0;list-style:none}
+.pop .opts li{margin:0}
+.pop .opts label{display:flex;align-items:center;gap:8px;padding:5px 2px;font-size:12.5px;cursor:pointer}
+.pop .opts label:hover{color:var(--accent)}
+.pop .opts input{accent-color:var(--accent);width:14px;height:14px}
+.pop .opts .cnt{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.pop .note{font-size:10.5px;color:var(--ink-3);margin:6px 0 0}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -189,7 +252,7 @@ footer p{margin:0 0 6px}
 <header class="masthead">
   <p class="kicker">PRODUCTION BOARD / 2026-09-03</p>
   <h1>制作進捗ボード</h1>
-  <p class="lede">LP・eラーニング・動画・広告の3本を、1枚で見るための表です。何を作ったか、どこまでできているか、あと何が残っているか。公開したURLは各行の右端に貼って保存できます。</p>
+  <p class="lede">LP・eラーニング・動画・広告の3本を、1枚で見るための表です。<b>進捗の欄をクリックするとバーが出て、その場で動かせます。</b>列見出しの▼からは行を絞り込めます。公開したURLは各行の右端に貼って保存できます。</p>
 </header>
 
 <div class="pillars">
@@ -674,6 +737,14 @@ footer p{margin:0 0 6px}
     <li><b>赤い縁の行</b>　担当が決まっていない仕事。誰かを決めないと進みません</li>
     <li><b>右端の欄</b>　公開したURL・動画URL・入稿先を貼って保存します。この表を開いた人全員に共有されます</li>
   </ol>
+  <h3 style="margin-top:18px">さわれるところ</h3>
+  <ol>
+    <li><b>進捗の欄をクリック</b>　バーが出ます。動かして％を決め、未着手／進行中／確認待ちを選んで保存します</li>
+    <li><b>LPの4段の欄をクリック</b>　段ごとに ○ △ × を選び直せます。④本番公開だけは、右端にURLを入れると自動で○になります</li>
+    <li><b>列見出しをクリック</b>　▼のついた見出しから、表示したい値だけを選んで行を絞り込めます。複数の列を組み合わせられます</li>
+    <li><b>工程表に戻す</b>　編集した値は、いつでも工程表の元の数字に戻せます。変更した行には元の値が小さく残ります</li>
+    <li>変更も絞り込みも、上の3つの数字にすぐ反映されます。保存した値はこの表を開いた人全員に共有されます</li>
+  </ol>
 </div>
 
 <footer>
@@ -686,14 +757,402 @@ footer p{margin:0 0 6px}
 
 <script>
 (function(){
-  var ROWS = {};
+  "use strict";
+  var ROWS = {};        // id -> {tr, urlTd, progTd, stepTd, base:{}, cur:{}}
+  var DB = null;
+  var pop = null;       // 開いているポップオーバー
+
+  /* ============ 初期化：行を拾って、いまの値を記憶する ============ */
   document.querySelectorAll("td[data-url]").forEach(function(td){
     var id = td.getAttribute("data-url");
+    var tr = td.closest("tr");
+    tr.setAttribute("data-row", id);
+    var progTd = null, stepTd = null;
+    var pct = tr.querySelector(".pct"); if (pct) progTd = pct.closest("td");
+    var stp = tr.querySelector(".steps"); if (stp) stepTd = stp.closest("td");
+
+    var rec = {tr:tr, urlTd:td, progTd:progTd, stepTd:stepTd, savedUrl:"", base:{}, cur:{}};
+
+    if (progTd){
+      var n = parseInt((progTd.querySelector(".pct b")||{}).textContent, 10);
+      var st = (progTd.querySelector(".pct .st")||{}).textContent || "未着手";
+      rec.base = {pct: isNaN(n) ? 0 : n, state: st.trim()};
+      rec.cur = {pct: rec.base.pct, state: rec.base.state};
+      progTd.classList.add("editable");
+      progTd.tabIndex = 0;
+      progTd.setAttribute("role","button");
+      progTd.setAttribute("aria-label","進捗を変更");
+    }
+    if (stepTd){
+      var marks = [];
+      stepTd.querySelectorAll(".steps i").forEach(function(el){
+        marks.push(el.classList.contains("on") ? "○" : el.classList.contains("half") ? "△" : "×");
+      });
+      var lab = stepTd.querySelector(".steplab");
+      rec.base = {steps: marks, note: (lab ? lab.textContent : "").replace(/^\s*\d\/4\s*/,"").trim()};
+      rec.cur = {steps: marks.slice(), note: rec.base.note};
+      stepTd.classList.add("editable");
+      stepTd.tabIndex = 0;
+      stepTd.setAttribute("role","button");
+      stepTd.setAttribute("aria-label","進み具合を変更");
+    }
+    ROWS[id] = rec;
+  });
+
+  /* ============ 描画 ============ */
+  function paintProg(rec){
+    var td = rec.progTd; if (!td) return;
+    var p = rec.cur.pct, st = rec.cur.state;
+    td.classList.remove("s-run","s-chk","s-idle");
+    td.classList.add(st === "確認待ち" ? "s-chk" : st === "進行中" ? "s-run" : "s-idle");
+    td.querySelector(".pct b").textContent = p + "%";
+    td.querySelector(".pct .st").textContent = st;
+    td.querySelector(".bar i").style.width = p + "%";
+    var mk = td.querySelector(".edited");
+    var changed = (p !== rec.base.pct || st !== rec.base.state);
+    if (changed && !mk){
+      mk = document.createElement("span"); mk.className = "edited";
+      td.appendChild(mk);
+    }
+    if (mk){
+      if (changed){ mk.textContent = "工程表 " + rec.base.pct + "% " + rec.base.state; mk.hidden = false; }
+      else mk.hidden = true;
+    }
+  }
+
+  function paintSteps(rec){
+    var td = rec.stepTd; if (!td) return;
+    var m = rec.cur.steps;
+    var bars = td.querySelectorAll(".steps i");
+    var reached = 0;
+    for (var k = 0; k < bars.length; k++){
+      bars[k].className = m[k] === "○" ? "on" : m[k] === "△" ? "half" : "";
+      if (m[k] !== "×") reached++;
+    }
+    var lab = td.querySelector(".steplab");
+    if (lab) lab.innerHTML = "<b>" + reached + "/4</b>　" + (rec.cur.note || "");
+    var mk = td.querySelector(".edited");
+    var changed = m.join("") !== rec.base.steps.join("");
+    if (changed && !mk){ mk = document.createElement("span"); mk.className = "edited"; td.appendChild(mk); }
+    if (mk){
+      if (changed){ mk.textContent = "工程表 " + rec.base.steps.join(""); mk.hidden = false; }
+      else mk.hidden = true;
+    }
+  }
+
+  /* ============ 上の3つの数字を計算しなおす ============ */
+  function avgIn(sel){
+    var v = [];
+    document.querySelectorAll(sel + " tr[data-row]").forEach(function(tr){
+      var r = ROWS[tr.getAttribute("data-row")];
+      if (r && r.progTd) v.push(r.cur.pct);
+    });
+    return v.length ? Math.round(v.reduce(function(a,b){return a+b;},0) / v.length) : 0;
+  }
+  function retally(){
+    var reached = 0, total = 0;
+    document.querySelectorAll("#lp tr[data-row]").forEach(function(tr){
+      var r = ROWS[tr.getAttribute("data-row")];
+      if (!r || !r.stepTd) return;
+      total += 4;
+      r.cur.steps.forEach(function(x){ if (x !== "×") reached++; });
+    });
+    var lp = document.querySelector(".p-lp");
+    if (lp && total){
+      lp.querySelector(".sub").textContent = "22ページ · 4段のうち " + reached + "/" + total + " 到達";
+      lp.querySelector(".track i").style.width = Math.round(reached/total*100) + "%";
+    }
+    var e = avgIn("#edu"), a = avgIn("#ad");
+    var pe = document.querySelector(".p-ed"), pa = document.querySelector(".p-ad");
+    if (pe){ pe.querySelector(".big").textContent = e + "%"; pe.querySelector(".track i").style.width = e + "%"; }
+    if (pa){ pa.querySelector(".big").textContent = a + "%"; pa.querySelector(".track i").style.width = a + "%"; }
+    var he = document.querySelector("#edu .sec-head .n");
+    if (he) he.textContent = he.textContent.replace(/平均\d+%/, "平均" + e + "%");
+  }
+
+  /* ============ ポップオーバー ============ */
+  function closePop(){
+    if (!pop) return;
+    var owner = pop.owner;
+    pop.el.remove(); pop = null;
+    window.removeEventListener("scroll", place, true);
+    window.removeEventListener("resize", place);
+    if (owner && owner.focus) owner.focus();
+  }
+  function place(){
+    if (!pop) return;
+    var r = pop.owner.getBoundingClientRect(), el = pop.el;
+    var w = el.offsetWidth, h = el.offsetHeight;
+    var left = Math.min(Math.max(8, r.left), window.innerWidth - w - 8);
+    var top = r.bottom + 6;
+    if (top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 6);
+    el.style.left = left + "px"; el.style.top = top + "px";
+  }
+  function openPop(owner, build){
+    var reopen = pop && pop.owner === owner;
+    closePop();
+    if (reopen) return;
+    var el = document.createElement("div");
+    el.className = "pop"; el.setAttribute("role","dialog");
+    build(el);
+    document.body.appendChild(el);
+    pop = {el:el, owner:owner};
+    place();
+    window.addEventListener("scroll", place, true);
+    window.addEventListener("resize", place);
+    var f = el.querySelector("input,button");
+    if (f) f.focus();
+  }
+  document.addEventListener("mousedown", function(e){
+    if (pop && !pop.el.contains(e.target) && !pop.owner.contains(e.target)) closePop();
+  });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") closePop(); });
+
+  function seg(values, current, onPick){
+    var box = document.createElement("div"); box.className = "seg";
+    values.forEach(function(v){
+      var b = document.createElement("button");
+      b.type = "button"; b.textContent = v;
+      b.setAttribute("aria-pressed", String(v === current));
+      b.addEventListener("click", function(){
+        box.querySelectorAll("button").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+        b.setAttribute("aria-pressed","true");
+        onPick(v);
+      });
+      box.appendChild(b);
+    });
+    return box;
+  }
+  function acts(el, onSave, onReset){
+    var wrap = document.createElement("div"); wrap.className = "acts";
+    var save = document.createElement("button");
+    save.type = "button"; save.className = "save"; save.textContent = "保存";
+    save.addEventListener("click", onSave);
+    var cancel = document.createElement("button");
+    cancel.type = "button"; cancel.className = "ghost"; cancel.textContent = "取消";
+    cancel.addEventListener("click", closePop);
+    var reset = document.createElement("button");
+    reset.type = "button"; reset.className = "reset"; reset.textContent = "工程表に戻す";
+    reset.addEventListener("click", onReset);
+    wrap.appendChild(save); wrap.appendChild(cancel); wrap.appendChild(reset);
+    el.appendChild(wrap);
+  }
+
+  /* ---- 進捗エディタ ---- */
+  function progEditor(id){
+    var rec = ROWS[id];
+    openPop(rec.progTd, function(el){
+      var name = (rec.tr.querySelector(".nm") || {}).textContent || "";
+      var pct = rec.cur.pct, state = rec.cur.state;
+      el.innerHTML = "<h4>" + name.replace(/</g,"&lt;") + "</h4><p class='sub'>進捗を動かして選びます</p>";
+      var row = document.createElement("div"); row.className = "row";
+      var range = document.createElement("input");
+      range.type = "range"; range.min = "0"; range.max = "100"; range.step = "5"; range.value = String(pct);
+      range.setAttribute("aria-label","進捗");
+      var val = document.createElement("span"); val.className = "val"; val.textContent = pct + "%";
+      range.addEventListener("input", function(){ pct = +range.value; val.textContent = pct + "%"; });
+      row.appendChild(range); row.appendChild(val); el.appendChild(row);
+      el.appendChild(seg(["未着手","進行中","確認待ち"], state, function(v){ state = v; }));
+      acts(el, function(){
+        rec.cur.pct = pct; rec.cur.state = state;
+        paintProg(rec); retally(); save("prog/" + id, {pct:pct, state:state});
+        closePop();
+      }, function(){
+        rec.cur.pct = rec.base.pct; rec.cur.state = rec.base.state;
+        paintProg(rec); retally(); clear("prog/" + id);
+        closePop();
+      });
+    });
+  }
+
+  /* ---- 4段エディタ ---- */
+  var STEP_LABELS = ["① 原稿・デザイン","② 付随ページ","③ 問い合わせ導線","④ 本番公開"];
+  function stepEditor(id){
+    var rec = ROWS[id];
+    openPop(rec.stepTd, function(el){
+      var name = (rec.tr.querySelector(".nm") || {}).textContent || "";
+      var marks = rec.cur.steps.slice();
+      el.innerHTML = "<h4>" + name.replace(/</g,"&lt;") + "</h4><p class='sub'>段ごとに ○ △ × を選びます</p>";
+      for (var k = 0; k < 4; k++){
+        (function(k){
+          var r = document.createElement("div"); r.className = "steprow" + (k === 3 ? " locked" : "");
+          var lb = document.createElement("span"); lb.className = "lb"; lb.textContent = STEP_LABELS[k];
+          r.appendChild(lb);
+          var sg = seg(["○","△","×"], marks[k], function(v){ if (k < 3) marks[k] = v; });
+          if (k === 3) sg.querySelectorAll("button").forEach(function(b){ b.disabled = true; });
+          r.appendChild(sg); el.appendChild(r);
+        })(k);
+      }
+      var note = document.createElement("p"); note.className = "note";
+      note.textContent = "④ 本番公開は、右端にURLを入れると自動で○になります。";
+      el.appendChild(note);
+      acts(el, function(){
+        rec.cur.steps = marks.slice();
+        paintSteps(rec); retally(); save("step/" + id, {steps: marks.join("")});
+        closePop();
+      }, function(){
+        rec.cur.steps = rec.base.steps.slice();
+        paintSteps(rec); retally(); clear("step/" + id);
+        closePop();
+      });
+    });
+  }
+
+  document.addEventListener("click", function(e){
+    var td = e.target.closest ? e.target.closest("td.editable") : null;
+    if (!td) return;
+    if (e.target.closest("a,input,button")) return;
+    var id = td.closest("tr").getAttribute("data-row");
+    if (td === ROWS[id].progTd) progEditor(id); else stepEditor(id);
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var td = document.activeElement;
+    if (!td || !td.classList || !td.classList.contains("editable")) return;
+    e.preventDefault();
+    var id = td.closest("tr").getAttribute("data-row");
+    if (td === ROWS[id].progTd) progEditor(id); else stepEditor(id);
+  });
+
+  /* ============ 列見出しからの絞り込み ============ */
+  function keyOf(cell){
+    if (!cell) return null;
+    var c = cell.querySelector(".chip"); if (c) return c.textContent.trim();
+    var o = cell.querySelector(".owner"); if (o) return o.textContent.trim();
+    var s = cell.querySelector(".pct .st"); if (s) return s.textContent.trim();
+    var b = cell.querySelector(".steplab b"); if (b) return b.textContent.trim();
+    return null;
+  }
+
+  document.querySelectorAll("table").forEach(function(table){
+    var ths = table.querySelectorAll("thead th");
+    var body = table.querySelector("tbody");
+    if (!body) return;
+    var trs = Array.prototype.slice.call(body.querySelectorAll("tr"));
+    if (!trs.length) return;
+
+    var active = {};   // colIndex -> Set of 選ばれている値
+
+    var bar = document.createElement("div"); bar.className = "filterbar";
+    table.parentNode.insertBefore(bar, table);
+
+    var empty = document.createElement("tr");
+    empty.className = "norows"; empty.hidden = true;
+    empty.innerHTML = "<td colspan='" + ths.length + "'>この条件に合う行はありません</td>";
+    body.appendChild(empty);
+
+    function apply(){
+      var shown = 0;
+      trs.forEach(function(tr){
+        var ok = Object.keys(active).every(function(ci){
+          var k = keyOf(tr.children[+ci]);
+          return active[ci].has(k);
+        });
+        tr.hidden = !ok;
+        if (ok) shown++;
+      });
+      empty.hidden = shown > 0;
+      var keys = Object.keys(active);
+      bar.textContent = "";
+      if (keys.length){
+        bar.classList.add("on");
+        bar.appendChild(document.createTextNode("絞り込み中："));
+        keys.forEach(function(ci){
+          var t = document.createElement("span"); t.className = "tag";
+          t.textContent = ths[ci].dataset.label + " " + Array.from(active[ci]).join("・");
+          bar.appendChild(t);
+        });
+        var n = document.createElement("span");
+        n.textContent = shown + " 行";
+        bar.appendChild(n);
+        var clr = document.createElement("button");
+        clr.type = "button"; clr.textContent = "すべて表示";
+        clr.addEventListener("click", function(){
+          active = {}; ths.forEach(function(th){ th.classList.remove("on"); }); apply();
+        });
+        bar.appendChild(clr);
+      } else {
+        bar.classList.remove("on");
+      }
+    }
+
+    ths.forEach(function(th, ci){
+      var vals = [];
+      trs.forEach(function(tr){
+        var k = keyOf(tr.children[ci]);
+        if (k && vals.indexOf(k) < 0) vals.push(k);
+      });
+      if (vals.length < 2 || vals.length > 12) return;
+
+      th.classList.add("filterable");
+      th.dataset.label = th.textContent.trim();
+      th.tabIndex = 0;
+      th.setAttribute("role","button");
+      th.setAttribute("aria-label", th.dataset.label + " で絞り込む");
+      var caret = document.createElement("span");
+      caret.className = "caret"; caret.textContent = "▼";
+      th.appendChild(caret);
+
+      function open(){
+        openPop(th, function(el){
+          el.innerHTML = "<h4>" + th.dataset.label + " で絞り込む</h4>" +
+                         "<p class='sub'>表示したい値だけチェックします</p>";
+          var ul = document.createElement("ul"); ul.className = "opts";
+          var chosen = active[ci] ? new Set(active[ci]) : new Set(vals);
+          vals.forEach(function(v){
+            var count = trs.filter(function(tr){ return keyOf(tr.children[ci]) === v; }).length;
+            var li = document.createElement("li");
+            var lb = document.createElement("label");
+            var cb = document.createElement("input");
+            cb.type = "checkbox"; cb.checked = chosen.has(v);
+            cb.addEventListener("change", function(){
+              if (cb.checked) chosen.add(v); else chosen.delete(v);
+            });
+            var tx = document.createElement("span"); tx.textContent = v;
+            var cn = document.createElement("span"); cn.className = "cnt"; cn.textContent = count;
+            lb.appendChild(cb); lb.appendChild(tx); lb.appendChild(cn);
+            li.appendChild(lb); ul.appendChild(li);
+          });
+          el.appendChild(ul);
+          acts(el, function(){
+            if (chosen.size === 0 || chosen.size === vals.length){
+              delete active[ci]; th.classList.remove("on");
+            } else {
+              active[ci] = chosen; th.classList.add("on");
+            }
+            apply(); closePop();
+          }, function(){
+            delete active[ci]; th.classList.remove("on"); apply(); closePop();
+          });
+          el.querySelector(".reset").textContent = "この列を解除";
+        });
+      }
+      th.addEventListener("click", open);
+      th.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " "){ e.preventDefault(); open(); }
+      });
+    });
+  });
+
+  /* ============ 保存（db） ============ */
+  function save(path, data){
+    if (!DB) return;
+    data.updatedAt = new Date().toISOString();
+    DB.doc(path).set(data).catch(function(){});
+  }
+  function clear(path){
+    if (!DB) return;
+    DB.doc(path).delete().catch(function(){});
+  }
+
+  /* ============ URL欄 ============ */
+  Object.keys(ROWS).forEach(function(id){
+    var rec = ROWS[id], td = rec.urlTd;
     var box = document.createElement("div"); box.className = "urlbox";
     var row = document.createElement("div"); row.className = "urlrow";
     var input = document.createElement("input");
     input.type = "url"; input.placeholder = "https://…　できたらここに貼る";
-    input.setAttribute("aria-label", "URL");
+    input.setAttribute("aria-label","URL");
     var btn = document.createElement("button");
     btn.type = "button"; btn.textContent = "保存"; btn.disabled = true;
     var state = document.createElement("p"); state.className = "urlstate";
@@ -701,39 +1160,39 @@ footer p{margin:0 0 6px}
     row.appendChild(input); row.appendChild(btn);
     box.appendChild(row); box.appendChild(state);
     td.appendChild(box);
-    ROWS[id] = {input:input, btn:btn, state:state, tr:td.closest("tr"), saved:""};
+    rec.input = input; rec.btn = btn; rec.state = state;
   });
 
-  function setStep4(row, filled){
-    var bars = row.tr.querySelectorAll(".steps i");
-    if (bars.length !== 4) return;
-    bars[3].className = filled ? "on" : "";
-    var lab = row.tr.querySelector(".steplab b");
-    if (lab && filled) lab.textContent = "4/4";
-  }
-
-  function show(row, url){
-    row.saved = url || "";
-    row.input.value = row.saved;
-    setStep4(row, !!row.saved);
-    if (row.saved) {
-      row.state.className = "urlstate ok";
-      row.state.innerHTML = "登録済み · <a href=\"" + row.saved.replace(/"/g,"&quot;") +
+  function showUrl(rec, url){
+    rec.savedUrl = url || "";
+    rec.input.value = rec.savedUrl;
+    if (rec.stepTd){
+      rec.cur.steps[3] = rec.savedUrl ? "○" : "×";
+      paintSteps(rec); retally();
+    }
+    if (rec.savedUrl){
+      rec.state.className = "urlstate ok";
+      rec.state.innerHTML = "登録済み · <a href=\"" + rec.savedUrl.replace(/"/g,"&quot;") +
         "\" target=\"_blank\" rel=\"noopener\">開く</a>";
     } else {
-      row.state.className = "urlstate";
-      row.state.textContent = "未登録";
+      rec.state.className = "urlstate";
+      rec.state.textContent = "未登録";
     }
   }
 
   function offline(msg){
     Object.keys(ROWS).forEach(function(k){
       var r = ROWS[k];
-      r.state.className = "urlstate";
-      r.state.textContent = msg;
+      r.state.className = "urlstate"; r.state.textContent = "";
       r.btn.disabled = true; r.input.disabled = true;
-      r.input.placeholder = "保存できません";
+      r.input.placeholder = "—";
+      if (r.progTd) r.progTd.classList.remove("editable");
+      if (r.stepTd) r.stepTd.classList.remove("editable");
     });
+    var b = document.createElement("p");
+    b.className = "offline-note"; b.textContent = msg;
+    var host = document.querySelector(".pillars");
+    if (host) host.parentNode.insertBefore(b, host);
   }
 
   var api = (typeof window.claude === "object" && window.claude &&
@@ -741,44 +1200,60 @@ footer p{margin:0 0 6px}
     ? window.claude.use("db") : Promise.resolve(null);
 
   api.then(function(db){
-    if (!db) { offline("この画面ではURLを保存できません"); return; }
+    if (!db){ offline("いまは読み取り専用で開いています。進捗の変更とURLの保存はできません（絞り込みは使えます）。"); return; }
+    DB = db;
 
     Object.keys(ROWS).forEach(function(id){
-      var row = ROWS[id];
+      var rec = ROWS[id];
       var ref = db.doc("lp/" + id);
 
       ref.onSnapshot(function(snap){
         var url = snap.exists ? (snap.data().url || "") : "";
-        if (document.activeElement !== row.input) show(row, url);
+        if (document.activeElement !== rec.input) showUrl(rec, url);
       }, function(){
-        row.state.className = "urlstate err";
-        row.state.textContent = "同期が切れました。再読み込みしてください";
+        rec.state.className = "urlstate err";
+        rec.state.textContent = "同期が切れました。再読み込みしてください";
       });
 
-      row.input.addEventListener("input", function(){
-        row.btn.disabled = row.input.value.trim() === row.saved;
-      });
+      if (rec.progTd){
+        db.doc("prog/" + id).onSnapshot(function(snap){
+          var d = snap.exists ? snap.data() : null;
+          rec.cur.pct = d && typeof d.pct === "number" ? d.pct : rec.base.pct;
+          rec.cur.state = d && d.state ? d.state : rec.base.state;
+          paintProg(rec); retally();
+        }, function(){});
+      }
+      if (rec.stepTd){
+        db.doc("step/" + id).onSnapshot(function(snap){
+          var d = snap.exists ? snap.data() : null;
+          var m = d && typeof d.steps === "string" ? d.steps.split("") : rec.base.steps.slice();
+          m[3] = rec.savedUrl ? "○" : "×";
+          rec.cur.steps = m;
+          paintSteps(rec); retally();
+        }, function(){});
+      }
 
-      row.btn.addEventListener("click", function(){
-        var v = row.input.value.trim();
-        row.btn.disabled = true;
-        row.state.className = "urlstate";
-        row.state.textContent = "保存中…";
-        ref.set({ url: v, updatedAt: new Date().toISOString() }).then(function(){
-          show(row, v);
+      rec.input.addEventListener("input", function(){
+        rec.btn.disabled = rec.input.value.trim() === rec.savedUrl;
+      });
+      rec.btn.addEventListener("click", function(){
+        var v = rec.input.value.trim();
+        rec.btn.disabled = true;
+        rec.state.className = "urlstate"; rec.state.textContent = "保存中…";
+        ref.set({url:v, updatedAt:new Date().toISOString()}).then(function(){
+          showUrl(rec, v);
         }).catch(function(e){
-          row.state.className = "urlstate err";
-          row.state.textContent = (e && e.code === "invalid_argument")
+          rec.state.className = "urlstate err";
+          rec.state.textContent = (e && e.code === "invalid_argument")
             ? "この画面からは保存できません（編集権限が要ります）"
             : "保存できませんでした。もう一度お試しください";
-          row.btn.disabled = false;
+          rec.btn.disabled = false;
         });
       });
-
-      row.input.addEventListener("keydown", function(e){
-        if (e.key === "Enter") { e.preventDefault(); if (!row.btn.disabled) row.btn.click(); }
+      rec.input.addEventListener("keydown", function(e){
+        if (e.key === "Enter"){ e.preventDefault(); if (!rec.btn.disabled) rec.btn.click(); }
       });
     });
-  }).catch(function(){ offline("この画面ではURLを保存できません"); });
+  }).catch(function(){ offline("いまは読み取り専用で開いています。進捗の変更とURLの保存はできません（絞り込みは使えます）。"); });
 })();
 </script>
