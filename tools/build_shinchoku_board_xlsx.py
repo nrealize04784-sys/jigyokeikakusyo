@@ -64,11 +64,11 @@ def dv(ws,kind,rng_,f1,title,prompt,blank=False):
 # ================================================== LP
 ws=wb.active; ws.title="LP"
 HEAD=["案件","LP名","デザインの方向","原稿・デザイン","問い合わせ導線","本番公開",
-      "本番URL（記入欄）","残っていること","更新日"]
-W=[24,32,34,14,15,11,36,58,11]
+      "本番URL（記入欄）","開く","残っていること","更新日"]
+W=[24,32,34,14,15,11,36,8,56,11]
 sheet_header(ws,"制作進捗ボード ─ LP",
   "これまでに作った11本のLP。実物を1ページずつ読んで確認したもの。調査日 2026-09-03",
-  "水色のセルはクリックすると▼が出て選べます。黄色のG列にURLを貼ると本番公開が○になり、そのセルがページへのリンクになります。")
+  "水色のセルはクリックすると▼が出て選べます。黄色のG列にURLを貼ると、本番公開が○になり、H列の「開く」からそのページへ飛べます。")
 HR=5; write_head(ws,HR,HEAD,W)
 
 lp=[
@@ -110,15 +110,18 @@ lp=[
 for n,r in enumerate(lp):
     ex=HR+1+n
     anken,name,d,s1,s3,todo,upd=r
-    for col,val in ((1,anken),(2,name),(3,d),(4,s1),(5,s3),(8,todo),(9,upd)):
+    for col,val in ((1,anken),(2,name),(3,d),(4,s1),(5,s3),(9,todo),(10,upd)):
         ws.cell(row=ex,column=col,value=val)
     ws.cell(row=ex,column=6,value='=IF(G{0}="","×","○")'.format(ex))
+    # URLを貼ると、この「開く」がそのページへのリンクになる
+    h=ws.cell(row=ex,column=8,value='=IF(G{0}="","",HYPERLINK(G{0},"開く"))'.format(ex))
+    h.font=Font(name=F,size=9,color="0563C1",underline="single")
     ws.row_dimensions[ex].height=46
     for col in range(1,len(HEAD)+1):
         c=ws.cell(row=ex,column=col); c.border=box
-        c.font=Font(name=F,size=9,color=INK)
-        c.alignment=Alignment(vertical="center",wrap_text=(col in (1,2,3,8)),
-                              horizontal="center" if col in (4,5,6,9) else "left")
+        if col != 8: c.font=Font(name=F,size=9,color=INK)
+        c.alignment=Alignment(vertical="center",wrap_text=(col in (1,2,3,9)),
+                              horizontal="center" if col in (4,5,6,8,10) else "left")
         if n%2==1 and col!=7: c.fill=PatternFill("solid",fgColor=BAND)
     for col in (1,4,5):
         ws.cell(row=ex,column=col).fill=PatternFill("solid",fgColor=EDIT)
@@ -148,24 +151,26 @@ c=ws.cell(row=tot,column=7,value='=COUNTA(G{0}:G{1})&" 本 公開ずみ"'.format
 c.font=Font(name=F,size=9,bold=True,color=ACC)
 for col in range(3,8):
     ws.cell(row=tot,column=col).border=Border(top=Side(style="medium",color=ACC))
-ws.freeze_panes="C6"; ws.auto_filter.ref="A{0}:I{1}".format(HR,last); ws.sheet_view.showGridLines=False
+ws.freeze_panes="C6"; ws.auto_filter.ref="A{0}:J{1}".format(HR,last); ws.sheet_view.showGridLines=False
 
 # ================================================== タスクシート
-THEAD=["何を作るか／するか","どこで使う","担当","進捗","状態","URL記入欄","メモ"]
-TW=[34,30,24,10,11,34,44]
+THEAD=["何を作るか／するか","どこで使う","担当","進捗","状態","URL記入欄","開く","メモ"]
+TW=[34,30,24,10,11,34,8,42]
 
 def task_sheet(name,title,lead,note,items):
     s=wb.create_sheet(name)
     sheet_header(s,title,lead,note); write_head(s,5,THEAD,TW)
     r=6
     for nm,where,own,pct,state,memo in items:
-        for col,val in ((1,nm),(2,where),(3,own),(4,pct/100.0),(5,state),(7,memo)):
+        for col,val in ((1,nm),(2,where),(3,own),(4,pct/100.0),(5,state),(8,memo)):
             s.cell(row=r,column=col,value=val)
+        g=s.cell(row=r,column=7,value='=IF(F{0}="","",HYPERLINK(F{0},"開く"))'.format(r))
         s.row_dimensions[r].height=32
         for col in range(1,len(THEAD)+1):
-            c=s.cell(row=r,column=col); c.border=box; c.font=Font(name=F,size=9,color=INK)
-            c.alignment=Alignment(vertical="center",wrap_text=(col in (1,2,7)),
-                                  horizontal="center" if col in (4,5) else "left")
+            c=s.cell(row=r,column=col); c.border=box
+            if col != 7: c.font=Font(name=F,size=9,color=INK)
+            c.alignment=Alignment(vertical="center",wrap_text=(col in (1,2,8)),
+                                  horizontal="center" if col in (4,5,7) else "left")
         s.cell(row=r,column=4).number_format="0%"
         s.cell(row=r,column=5).font=Font(name=F,size=9,bold=True,
             color={"進行中":AMBER,"確認待ち":GREEN,"未着手":GREY}[state])
@@ -175,6 +180,7 @@ def task_sheet(name,title,lead,note,items):
             s.cell(row=r,column=col).fill=PatternFill("solid",fgColor=EDIT)
         s.cell(row=r,column=6).fill=PatternFill("solid",fgColor=INPUT)
         s.cell(row=r,column=6).font=Font(name=F,size=9,color="0563C1",underline="single")
+        s.cell(row=r,column=7).font=Font(name=F,size=9,color="0563C1",underline="single")
         r+=1
     f,l=6,r-1
     s.conditional_formatting.add("D{0}:D{1}".format(f,l),
@@ -196,7 +202,7 @@ def task_sheet(name,title,lead,note,items):
         s.cell(row=t,column=col).border=Border(top=Side(style="medium",color=ACC))
     s.cell(row=f,column=3).comment=Comment(
       "クリックすると▼が出ます。一覧から選ぶか、直接書いてください。","制作進捗ボード",height=70,width=240)
-    s.freeze_panes="B6"; s.auto_filter.ref="A5:G{0}".format(l); s.sheet_view.showGridLines=False
+    s.freeze_panes="B6"; s.auto_filter.ref="A5:H{0}".format(l); s.sheet_view.showGridLines=False
     return s
 
 edu=[
@@ -219,7 +225,7 @@ edu=[
 ]
 s2=task_sheet("eラーニング・動画","制作進捗ボード ─ eラーニング・動画",
   "工程表（制作MASTER 2026-09-03 ／ 仕事の棚卸し 2026-09-02）の進捗をそのまま引いています。",
-  "ツールの箱は50%まで来ていますが、中に入れる動画が20%で止まっています。赤い担当名は「未定」です。黄色のF列にURLを貼るとリンクになります。",edu)
+  "ツールの箱は50%まで来ていますが、中に入れる動画が20%で止まっています。赤い担当名は「未定」です。黄色のF列にURLを貼ると、G列の「開く」からそのページへ飛べます。",edu)
 r=s2.max_row+2
 s2.cell(row=r,column=1,value="できている設計書・ガイド").font=Font(name=F,size=11,bold=True,color=ACC)
 r+=1
@@ -245,7 +251,7 @@ ad=[
 ]
 task_sheet("広告","制作進捗ボード ─ 広告",
   "工程表上のどの項目も0%。制作も運用もチェック体制もまだ始まっていません。",
-  "広告を出すには、飛ばす先のLPが公開され、問い合わせが届く状態である必要があります。着手日はLP公開日で決まります。",ad)
+  "広告を出すには、飛ばす先のLPが公開され、問い合わせが届く状態である必要があります。着手日はLP公開日で決まります。黄色のF列にURLを貼ると、G列の「開く」から飛べます。",ad)
 
 # ================================================== 凡例
 lg=wb.create_sheet("凡例と出典"); lg.sheet_view.showGridLines=False
@@ -276,7 +282,7 @@ kv(21,"担当","タスクシートのC列。一覧から選ぶか、直接書き
 kv(22,"進捗","タスクシートのD列。0%〜100%を5%きざみで選べます。選ぶとセルの中のバーが伸び縮みします。")
 kv(23,"状態","タスクシートのE列。未着手／進行中／確認待ち。")
 kv(24,"LPの○△×","LPシートのD・E列。本番公開（F列）はG列のURL有無から自動で決まります。")
-kv(25,"黄色の記入欄（本番URL）","公開したURL・動画URL・広告の入稿先を貼ります。貼ってEnterを押すと、そのセルがそのページへのリンクになり、クリックで開きます。リンクにならないときは、そのセルを右クリック→「リンク」で設定できます。")
+kv(25,"黄色の記入欄と「開く」","公開したURL・動画URL・広告の入稿先を、黄色のセルに貼ります。貼ると右隣の「開く」がそのページへのリンクになり、クリックで開きます。全シート同じ作りです。")
 kv(26,"列見出しの▼","オートフィルタです。値を選ぶとその行だけ表示されます。複数の列を組み合わせられます。")
 kv(27,"選択肢を増やしたいとき","非表示シート「選択肢」に一覧があります。値を足し、入力規則の参照範囲を広げれば選べるようになります。")
 head(29,"出典")
