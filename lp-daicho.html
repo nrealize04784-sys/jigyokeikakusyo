@@ -105,6 +105,9 @@ tbody tr.hot td{background:linear-gradient(90deg,var(--gap-bg) 0 3px,transparent
 .nm{font-weight:700;font-size:14.5px;line-height:1.5;margin:0 0 3px;letter-spacing:.01em}
 .nm a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
 .nm a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.nm a.live{color:var(--live);border-bottom-color:var(--live)}
+.nm a.live::after{content:"↗";font-size:.8em;margin-left:3px;vertical-align:super}
+.nm a.live:hover{color:var(--live);filter:brightness(1.15)}
 .dir{margin:0;font-size:11.5px;color:var(--ink-3)}
 .dir .sep{color:var(--rule)}
 .meta{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:6px;
@@ -720,6 +723,7 @@ th.filterable.on .caret{color:var(--accent)}
     <li><b>％表示</b>　工程表に入っている進捗をそのまま出しています。<b>確認待ち</b>＝作業は終わり誰かの確認を待っている、<b>進行中</b>＝手が動いている、<b>未着手</b>＝まだ始まっていない</li>
     <li><b>赤い縁の行</b>　担当が決まっていない仕事。誰かを決めないと進みません</li>
     <li><b>右端の欄</b>　公開したURL・動画URL・入稿先を貼って保存します。この表を開いた人全員に共有されます</li>
+    <li><b>URLを貼ると名前がそこへ飛びます</b>　保存した行は、左端の名前が緑になって<b>↗</b>が付き、クリックするとその公開ページが開きます。URLを消せば元に戻ります</li>
   </ol>
   <h3 style="margin-top:18px">さわれるところ</h3>
   <ol>
@@ -757,7 +761,8 @@ th.filterable.on .caret{color:var(--accent)}
     var pct = tr.querySelector(".pct"); if (pct) progTd = pct.closest("td");
     var stp = tr.querySelector(".steps"); if (stp) stepTd = stp.closest("td");
 
-    var rec = {tr:tr, urlTd:td, progTd:progTd, stepTd:stepTd, savedUrl:"", base:{}, cur:{}};
+    var rec = {tr:tr, urlTd:td, progTd:progTd, stepTd:stepTd, savedUrl:"",
+               nmEl:null, nmBaseHref:null, nmText:"", base:{}, cur:{}};
 
     if (progTd){
       var n = parseInt((progTd.querySelector(".pct b")||{}).textContent, 10);
@@ -769,6 +774,14 @@ th.filterable.on .caret{color:var(--accent)}
       progTd.setAttribute("role","button");
       progTd.setAttribute("aria-label","進捗を変更");
     }
+    var nmEl = tr.querySelector(".nm");
+    rec.nmEl = nmEl;
+    if (nmEl){
+      var a0 = nmEl.querySelector("a");
+      rec.nmBaseHref = a0 ? a0.getAttribute("href") : null;
+      rec.nmText = nmEl.textContent.trim();
+    }
+
     var ownEl = tr.querySelector(".owner");
     if (ownEl){
       rec.ownTd = ownEl.closest("td");
@@ -1280,16 +1293,44 @@ th.filterable.on .caret{color:var(--accent)}
     rec.input = input; rec.btn = btn; rec.state = state;
   });
 
+  function pointName(rec){
+    var nm = rec.nmEl; if (!nm) return;
+    var a = nm.querySelector("a");
+    if (rec.savedUrl){
+      if (!a){
+        a = document.createElement("a");
+        a.textContent = rec.nmText;
+        nm.textContent = "";
+        nm.appendChild(a);
+      }
+      a.setAttribute("href", rec.savedUrl);
+      a.setAttribute("target", "_blank");
+      a.setAttribute("rel", "noopener");
+      a.classList.add("live");
+      a.title = "公開ページを開く";
+    } else if (a){
+      a.classList.remove("live");
+      if (rec.nmBaseHref){
+        a.setAttribute("href", rec.nmBaseHref);
+        a.title = "制作したページを開く";
+      } else {
+        nm.textContent = rec.nmText;
+      }
+    }
+  }
+
   function showUrl(rec, url){
     rec.savedUrl = url || "";
     rec.input.value = rec.savedUrl;
+    pointName(rec);
     if (rec.stepTd){
       rec.cur.steps[LAST] = rec.savedUrl ? "○" : "×";
       paintSteps(rec); retally();
     }
     if (rec.savedUrl){
       rec.state.className = "urlstate ok";
-      rec.state.innerHTML = "登録済み · <a href=\"" + rec.savedUrl.replace(/"/g,"&quot;") +
+      rec.state.innerHTML = "公開ずみ · 名前をクリックで開きます · <a href=\"" +
+        rec.savedUrl.replace(/"/g,"&quot;") +
         "\" target=\"_blank\" rel=\"noopener\">開く</a>";
     } else {
       rec.state.className = "urlstate";
