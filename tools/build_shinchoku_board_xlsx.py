@@ -68,7 +68,7 @@ HEAD=["案件","LP名","デザインの方向","原稿・デザイン","問い�
 W=[24,32,34,14,15,11,36,58,11]
 sheet_header(ws,"制作進捗ボード ─ LP",
   "これまでに作った11本のLP。実物を1ページずつ読んで確認したもの。調査日 2026-09-03",
-  "水色のセルはクリックすると▼が出て選べます。黄色のG列にURLを入れると、本番公開が自動で○になります。")
+  "水色のセルはクリックすると▼が出て選べます。黄色のG列にURLを貼ると本番公開が○になり、そのセルがページへのリンクになります。")
 HR=5; write_head(ws,HR,HEAD,W)
 
 lp=[
@@ -112,8 +112,7 @@ for n,r in enumerate(lp):
     anken,name,d,s1,s3,todo,upd=r
     for col,val in ((1,anken),(2,name),(3,d),(4,s1),(5,s3),(8,todo),(9,upd)):
         ws.cell(row=ex,column=col,value=val)
-    # URLを入れると ○ がその公開ページへのリンクになる（COUNTIFは表示文字「○」で数える）
-    ws.cell(row=ex,column=6,value='=IF(G{0}="","×",HYPERLINK(G{0},"○"))'.format(ex))
+    ws.cell(row=ex,column=6,value='=IF(G{0}="","×","○")'.format(ex))
     ws.row_dimensions[ex].height=46
     for col in range(1,len(HEAD)+1):
         c=ws.cell(row=ex,column=col); c.border=box
@@ -124,7 +123,8 @@ for n,r in enumerate(lp):
     for col in (1,4,5):
         ws.cell(row=ex,column=col).fill=PatternFill("solid",fgColor=EDIT)
     g=ws.cell(row=ex,column=7)
-    g.fill=PatternFill("solid",fgColor=INPUT); g.font=Font(name=F,size=9,color="0000FF")
+    g.fill=PatternFill("solid",fgColor=INPUT)
+    g.font=Font(name=F,size=9,color="0563C1",underline="single")
     g.alignment=Alignment(vertical="center")
 
 first,last=HR+1,HR+len(lp)
@@ -174,7 +174,7 @@ def task_sheet(name,title,lead,note,items):
         for col in (3,4,5):
             s.cell(row=r,column=col).fill=PatternFill("solid",fgColor=EDIT)
         s.cell(row=r,column=6).fill=PatternFill("solid",fgColor=INPUT)
-        s.cell(row=r,column=6).font=Font(name=F,size=9,color="0000FF")
+        s.cell(row=r,column=6).font=Font(name=F,size=9,color="0563C1",underline="single")
         r+=1
     f,l=6,r-1
     s.conditional_formatting.add("D{0}:D{1}".format(f,l),
@@ -219,7 +219,7 @@ edu=[
 ]
 s2=task_sheet("eラーニング・動画","制作進捗ボード ─ eラーニング・動画",
   "工程表（制作MASTER 2026-09-03 ／ 仕事の棚卸し 2026-09-02）の進捗をそのまま引いています。",
-  "ツールの箱は50%まで来ていますが、中に入れる動画が20%で止まっています。赤い担当名は「未定」です。",edu)
+  "ツールの箱は50%まで来ていますが、中に入れる動画が20%で止まっています。赤い担当名は「未定」です。黄色のF列にURLを貼るとリンクになります。",edu)
 r=s2.max_row+2
 s2.cell(row=r,column=1,value="できている設計書・ガイド").font=Font(name=F,size=11,bold=True,color=ACC)
 r+=1
@@ -260,7 +260,7 @@ def kv(r,k,v):
 head(3,"LPの3段")
 kv(4,"原稿・デザイン","本編の文章とデザインが最後まで通っている")
 kv(5,"問い合わせ導線","ボタンの行き先が実在し、問い合わせが届く先につながっている")
-kv(6,"本番公開","独自ドメインで公開され、G列に本番URLが入っている（自動判定）。○はそのページへのリンクになり、クリックすると開きます。")
+kv(6,"本番公開","独自ドメインで公開され、G列に本番URLが入っている（自動判定）。")
 head(8,"記号")
 kv(9,"○","できている")
 kv(10,"△","仮づけ。メーラーを開くだけ、または行き先が「#」のまま")
@@ -276,7 +276,7 @@ kv(21,"担当","タスクシートのC列。一覧から選ぶか、直接書き
 kv(22,"進捗","タスクシートのD列。0%〜100%を5%きざみで選べます。選ぶとセルの中のバーが伸び縮みします。")
 kv(23,"状態","タスクシートのE列。未着手／進行中／確認待ち。")
 kv(24,"LPの○△×","LPシートのD・E列。本番公開（F列）はG列のURL有無から自動で決まります。")
-kv(25,"黄色の記入欄","公開したURL・動画URL・広告の入稿先を貼ります。LPシートは、貼るとF列の○がそのページへのリンクになります。")
+kv(25,"黄色の記入欄（本番URL）","公開したURL・動画URL・広告の入稿先を貼ります。貼ってEnterを押すと、そのセルがそのページへのリンクになり、クリックで開きます。リンクにならないときは、そのセルを右クリック→「リンク」で設定できます。")
 kv(26,"列見出しの▼","オートフィルタです。値を選ぶとその行だけ表示されます。複数の列を組み合わせられます。")
 kv(27,"選択肢を増やしたいとき","非表示シート「選択肢」に一覧があります。値を足し、入力規則の参照範囲を広げれば選べるようになります。")
 head(29,"出典")
