@@ -1,0 +1,700 @@
+<title>LP制作台帳</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Noto+Sans+JP:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --paper:#F4F1E9;
+  --panel:#FFFFFF;
+  --panel-2:#FAF8F3;
+  --rule:#DFD8CA;
+  --rule-soft:#EBE5D9;
+  --ink:#1B2330;
+  --ink-2:#57616F;
+  --ink-3:#8A9099;
+  --accent:#1F4E6B;
+  --accent-soft:#E3ECF1;
+  --live:#1C6647;
+  --live-bg:#E2EFE8;
+  --wip:#8A5A12;
+  --wip-bg:#F6EEDD;
+  --old:#6E747D;
+  --old-bg:#EDEBE5;
+  --gap:#993124;
+  --gap-bg:#F6E6E2;
+  --disp:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+  --body:"Noto Sans JP","Hiragino Kaku Gothic ProN",Meiryo,system-ui,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,SFMono-Regular,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#14181E; --panel:#1C222A; --panel-2:#212832;
+  --rule:#333C48; --rule-soft:#28313B;
+  --ink:#E7EAEE; --ink-2:#A6AEB9; --ink-3:#79818C;
+  --accent:#79B4D4; --accent-soft:#1D2A34;
+  --live:#63BC94; --live-bg:#172A22;
+  --wip:#D9AB61; --wip-bg:#2C2417;
+  --old:#8B929B; --old-bg:#252A31;
+  --gap:#DE8B7A; --gap-bg:#2F1D1A;
+}}
+:root[data-theme="dark"]{
+  --paper:#14181E; --panel:#1C222A; --panel-2:#212832;
+  --rule:#333C48; --rule-soft:#28313B;
+  --ink:#E7EAEE; --ink-2:#A6AEB9; --ink-3:#79818C;
+  --accent:#79B4D4; --accent-soft:#1D2A34;
+  --live:#63BC94; --live-bg:#172A22;
+  --wip:#D9AB61; --wip-bg:#2C2417;
+  --old:#8B929B; --old-bg:#252A31;
+  --gap:#DE8B7A; --gap-bg:#2F1D1A;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:14px;line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+.page{max-width:1240px;margin:0 auto;padding:40px 22px 80px}
+@media (min-width:900px){ .page{padding:56px 34px 100px} }
+
+/* ---------- 見出し ---------- */
+header.masthead{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:12px}
+.kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--accent);
+  font-weight:700;margin:0 0 10px;text-transform:uppercase}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(26px,4.4vw,40px);
+  line-height:1.28;letter-spacing:.02em;margin:0 0 12px;text-wrap:balance}
+.lede{margin:0;max-width:62ch;color:var(--ink-2);font-size:14px}
+
+/* ---------- 集計 ---------- */
+.tally{display:flex;flex-wrap:wrap;gap:0;margin:20px 0 40px;
+  border:1px solid var(--rule);background:var(--panel)}
+.tally div{flex:1 1 132px;padding:14px 16px;border-right:1px solid var(--rule-soft)}
+.tally div:last-child{border-right:0}
+.tally b{display:block;font-family:var(--mono);font-weight:700;font-size:26px;
+  line-height:1.2;font-variant-numeric:tabular-nums}
+.tally span{display:block;font-size:11px;color:var(--ink-3);letter-spacing:.08em;margin-top:2px}
+.tally .t-live b{color:var(--live)}
+.tally .t-gap b{color:var(--gap)}
+
+/* ---------- 節 ---------- */
+.grp{margin-bottom:44px}
+.grp-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  border-left:4px solid var(--accent);padding-left:12px;margin-bottom:6px}
+.grp-head h2{font-family:var(--disp);font-weight:800;font-size:19px;margin:0;letter-spacing:.03em}
+.grp-head .who{font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
+.grp-note{margin:0 0 14px 16px;font-size:12.5px;color:var(--ink-2);max-width:64ch}
+
+/* ---------- 表 ---------- */
+.scroller{overflow-x:auto;border:1px solid var(--rule);background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:1080px}
+thead th{
+  position:sticky;top:0;z-index:2;background:var(--panel-2);
+  font-size:10.5px;letter-spacing:.14em;color:var(--ink-3);font-weight:700;
+  text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule);white-space:nowrap;
+}
+tbody td{padding:16px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.now{background:linear-gradient(90deg,var(--accent-soft) 0 3px,transparent 3px)}
+
+/* 列幅 */
+.c-name{width:26%;min-width:250px}
+.c-parts{width:15%;min-width:160px}
+.c-prog{width:15%;min-width:170px}
+.c-todo{width:20%;min-width:210px}
+.c-url{width:24%;min-width:250px}
+
+.nm{font-weight:700;font-size:14.5px;line-height:1.5;margin:0 0 3px;letter-spacing:.01em}
+.nm a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.nm a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.dir{margin:0;font-size:11.5px;color:var(--ink-3)}
+.dir .sep{color:var(--rule)}
+.meta{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:6px;
+  font-variant-numeric:tabular-nums}
+
+.chip{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.06em;
+  padding:1px 8px;border-radius:2px;margin-bottom:6px}
+.chip.now{background:var(--live-bg);color:var(--live)}
+.chip.alt{background:var(--wip-bg);color:var(--wip)}
+.chip.old{background:var(--old-bg);color:var(--old)}
+
+.parts{margin:0;padding:0;list-style:none;font-size:12.5px}
+.parts li{display:flex;gap:7px;align-items:baseline;padding:2px 0}
+.parts li .k{color:var(--ink-3);font-size:10.5px;font-family:var(--mono);flex:0 0 52px}
+.parts li a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+.parts li a:hover{border-bottom-color:var(--accent)}
+.parts li.none{color:var(--gap);font-size:11.5px}
+
+/* 進捗 4段 */
+.steps{display:flex;gap:4px;margin:0 0 7px}
+.steps i{width:100%;height:7px;background:var(--rule);display:block;border-radius:1px}
+.steps i.on{background:var(--live)}
+.steps i.half{background:repeating-linear-gradient(45deg,var(--wip) 0 3px,transparent 3px 6px);
+  box-shadow:inset 0 0 0 1px var(--wip)}
+.steplab{font-size:11.5px;color:var(--ink-2);margin:0}
+.steplab b{font-family:var(--mono);color:var(--ink);font-weight:700}
+
+.todo{margin:0;padding-left:1.1em;font-size:12.5px;color:var(--ink-2)}
+.todo li{margin-bottom:4px}
+.todo li::marker{color:var(--ink-3)}
+.todo li.warn{color:var(--gap)}
+
+/* URL欄 */
+.urlbox{display:flex;flex-direction:column;gap:6px}
+.urlrow{display:flex;gap:6px}
+.urlbox input{
+  flex:1;min-width:0;font-family:var(--mono);font-size:11.5px;color:var(--ink);
+  background:var(--panel-2);border:1px solid var(--rule);border-radius:2px;
+  padding:8px 9px;line-height:1.5;
+}
+.urlbox input::placeholder{color:var(--ink-3);font-family:var(--body);font-size:11.5px}
+.urlbox input:focus-visible{outline:2px solid var(--accent);outline-offset:1px;background:var(--panel)}
+.urlbox button{
+  flex:0 0 auto;font-family:var(--body);font-size:11.5px;font-weight:700;color:var(--panel);
+  background:var(--accent);border:1px solid var(--accent);border-radius:2px;
+  padding:0 12px;cursor:pointer;
+}
+.urlbox button:hover{filter:brightness(1.12)}
+.urlbox button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.urlbox button[disabled]{opacity:.45;cursor:default;filter:none}
+.urlstate{font-size:10.5px;color:var(--ink-3);min-height:1.2em;font-family:var(--mono)}
+.urlstate.ok{color:var(--live)}
+.urlstate.err{color:var(--gap)}
+.urlstate a{color:var(--accent)}
+
+/* ---------- 凡例・脚注 ---------- */
+.legend{border:1px solid var(--rule);background:var(--panel);padding:18px 20px;margin-top:8px}
+.legend h3{font-family:var(--disp);font-size:15px;font-weight:800;margin:0 0 10px;letter-spacing:.03em}
+.legend ol{margin:0;padding-left:1.3em;font-size:12.5px;color:var(--ink-2);
+  display:grid;gap:4px}
+.legend ol b{color:var(--ink)}
+footer{margin-top:26px;font-size:11.5px;color:var(--ink-3);border-top:1px solid var(--rule);
+  padding-top:14px;max-width:70ch}
+footer p{margin:0 0 6px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="page">
+
+<header class="masthead">
+  <p class="kicker">LP INVENTORY / 2026-09-03</p>
+  <h1>LP制作台帳</h1>
+  <p class="lede">これまでに作った11本のLPを、案件ごとに並べました。何を作ったのか、どこまでできているのか、あと何が残っているのか。公開したLPのURLは、右端の欄に貼って保存できます。</p>
+</header>
+
+<div class="tally">
+  <div><b>11</b><span>LP（本編）</span></div>
+  <div><b>22</b><span>ページ総数</span></div>
+  <div><b>4</b><span>案件</span></div>
+  <div class="t-live"><b>3</b><span>現行として採用</span></div>
+  <div class="t-gap"><b>0</b><span>本番URL登録済</span></div>
+</div>
+
+<!-- ============ REALIZE CLUB ============ -->
+<section class="grp">
+  <div class="grp-head">
+    <h2>REALIZE CLUB｜法人向け</h2>
+    <span class="who">5案 / 10ページ</span>
+  </div>
+  <p class="grp-note">社員の人生を支える福利厚生として、企業に導入してもらうためのLP。同じ商材に対して、まったく違うデザイン方向で5案つくってあります。1案が現行、残り4案は比較用の別案として残っている状態です。</p>
+  <div class="scroller">
+  <table>
+    <thead><tr>
+      <th class="c-name">何を作ったか</th>
+      <th class="c-parts">ページ構成</th>
+      <th class="c-prog">どこまで</th>
+      <th class="c-todo">残っていること</th>
+      <th class="c-url">本番URL（貼り付け欄）</th>
+    </tr></thead>
+    <tbody>
+
+      <tr class="now">
+        <td>
+          <span class="chip now">現行</span>
+          <p class="nm"><a href="https://claude.ai/code/artifact/08b479a1-0803-4978-989b-dfbb853c3e95" target="_blank" rel="noopener">会社が、社員の人生を守る時代へ。</a></p>
+          <p class="dir">深緑 × 和モダン<span class="sep"> ／ </span>昭和と令和の対比構成</p>
+          <p class="meta">08b479a1 · 更新 09-03 · 共有リンク発行済</p>
+        </td>
+        <td>
+          <ul class="parts">
+            <li><span class="k">本編</span><span>見出し20本（不安→社会構造→ミオ先生→5つの価値→価格）</span></li>
+            <li><span class="k">資料請求</span><a href="https://claude.ai/code/artifact/b41aa6c8-3939-483e-9cf4-c92b3290ec3c" target="_blank" rel="noopener">4項目＋備考</a></li>
+            <li><span class="k">無料相談</span><a href="https://claude.ai/code/artifact/1759b2ad-5c72-4f74-98ae-2cdd1848347c" target="_blank" rel="noopener">5項目＋希望日時</a></li>
+          </ul>
+        </td>
+        <td>
+          <div class="steps"><i class="on"></i><i class="on"></i><i class="half"></i><i></i></div>
+          <p class="steplab"><b>3/4</b>　導線は仮づけ</p>
+        </td>
+        <td>
+          <ul class="todo">
+            <li class="warn">送信ボタンがメーラーを開くだけ（info@realize-os.co.jp 宛）。受付フォームの実装が要る</li>
+            <li>会社概要ページが未作成</li>
+            <li>本番ドメインへの公開</li>
+          </ul>
+        </td>
+        <td data-url="rc-wa"></td>
+      </tr>
+
+      <tr>
+        <td>
+          <span class="chip alt">別案</span>
+          <p class="nm"><a href="https://claude.ai/code/artifact/7355f424-d6c3-47fb-88a4-a9cfc890f07e" target="_blank" rel="noopener">会社が社員の人生を支える時代へ</a></p>
+          <p class="dir">星空タウン<span class="sep"> ／ </span>クリーム × 濃紺のイラスト主体</p>
+          <p class="meta">7355f424 · 更新 08-31</p>
+        </td>
+        <td>
+          <ul class="parts">
+            <li><span class="k">本編</span><span>イラスト14点を内蔵した1枚もの</span></li>
+            <li><span class="k">資料請求</span><a href="https://claude.ai/code/artifact/4e88d497-2710-4ece-9972-60aabc2da022" target="_blank" rel="noopener">4項目＋備考</a></li>
+            <li><span class="k">会社概要</span><a href="https://claude.ai/code/artifact/c5af6a39-a1ec-47e7-a2dd-652458d7fd69" target="_blank" rel="noopener">あり</a></li>
+          </ul>
+        </td>
+        <td>
+          <div class="steps"><i class="on"></i><i class="on"></i><i class="half"></i><i></i></div>
+          <p class="steplab"><b>3/4</b>　3ページ揃い</p>
+        </td>
+        <td>
+          <ul class="todo">
+            <li>3ページ揃っている唯一のRC案。採用するか否かの判断</li>
+            <li class="warn">送信はメーラー起動のみ</li>
+          </ul>
+        </td>
+        <td data-url="rc-hoshi"></td>
+      </tr>
+
+      <tr>
+        <td>
+          <span class="chip alt">別案</span>
+          <p class="nm"><a href="https://claude.ai/code/artifact/ded9a489-7357-4ed8-80a0-e012da4aaec4" target="_blank" rel="noopener">困る前に、灯す。</a></p>
+          <p class="dir">漆黒 × 炎のグラデーション<span class="sep"> ／ </span>重厚路線</p>
+          <p class="meta">ded9a489 · 更新 08-31</p>
+        </td>
+        <td>
+          <ul class="parts">
+            <li><span class="k">本編</span><span>1ファイルに本編・資料請求・導入相談を内包（画面切替式）</span></li>
+            <li><span class="k">資料請求</span><span>同ファイル内</span></li>
+            <li class="none"><span class="k">会社概要</span>リンクだけあって実体なし</li>
+          </ul>
+        </td>
+        <td>
+          <div class="steps"><i class="on"></i><i class="half"></i><i></i><i></i></div>
+          <p class="steplab"><b>2/4</b>　リンク要修正</p>
+        </td>
+        <td>
+          <ul class="todo">
+            <li class="warn">kaisha.html / shiryou-realize.html / sodan.html への相対リンクが残り、単体では飛べない</li>
+            <li>会社概要ページの作成</li>
+          </ul>
+        </td>
+        <td data-url="rc-honoo"></td>
+      </tr>
+
+      <tr>
+        <td>
+          <span class="chip alt">別案</span>
+          <p class="nm"><a href="https://claude.ai/code/artifact/4ce48691-4c9a-46fb-bbd2-e375366bc5ab" target="_blank" rel="noopener">その安心、今がお得。</a></p>
+          <p class="dir">スーパーの特売ポップ<span class="sep"> ／ </span>白地に赤と黄</p>
+          <p class="meta">4ce48691 · 更新 08-31</p>
+        </td>
+        <td>
+          <ul class="parts">
+            <li><span class="k">本編</span><span>「福利厚生を4ステップで」構成</span></li>
+            <li><span class="k">申込</span><span>資料請求・無料説明会の2フォームを同ページに内蔵</span></li>
+            <li class="none"><span class="k">会社概要</span>なし</li>
+          </ul>
+        </td>
+        <td>
+          <div class="steps"><i class="on"></i><i class="half"></i><i></i><i></i></div>
+          <p class="steplab"><b>2/4</b>　外部導線なし</p>
+        </td>
+        <td>
+          <ul class="todo">
+            <li class="warn">リンクがすべてページ内アンカー。外部への導線が1本もない</li>
+            <li>会社概要ページ、送信先の設定</li>
+          </ul>
+        </td>
+        <td data-url="rc-pop"></td>
+      </tr>
+
+      <tr>
+        <td>
+          <span class="chip alt">別案</span>
+          <p class="nm"><a href="https://claude.ai/code/artifact/b0f16478-7326-4826-88ce-4aa0230fbcae" target="_blank" rel="noopener">社員が、溶けていく前に。</a></p>
+          <p class="dir">アイスのメタファー<span class="sep"> ／ </span>手描き風</p>
+          <p class="meta">b0f16478 · 更新 08-28</p>
+        </td>
+        <td>
+          <ul class="parts">
+            <li><span class="k">本編</span><span>4つの不安 → REALIZEマーケット → 説明会</span></li>
+            <li><span class="k">資料請求</span><a href="https://claude.ai/code/artifact/a631f99f-f0e8-4bc0-8f78-67f01132ed31" target="_blank" rel="noopener">あり</a></li>
+            <li class="none"><span class="k">会社概要</span>なし</li>
+          </ul>
+        </td>
+        <td>
+          <div class="steps"><i class="on"></i><i class="half"></i><i></i><i></i></div>
+          <p class="steplab"><b>2/4</b>　部品が不足</p>
+        </td>
+        <td>
+          <ul class="todo">
+            <li>会社概要ページ</li>
+            <li class="warn">送信はメーラー起動のみ</li>
+          </ul>
+        </td>
+        <td data-url="rc-ice"></td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============ LMP ============ -->
+<section class="grp">
+  <div class="grp-head">
+    <h2>LIFE MAKE PARTNERS｜加盟店募集</h2>
+    <span class="who">3案 / 7ページ</span>
+  </div>
+  <p class="grp-note">不動産会社に加盟してもらうためのLP。3案あり、現行の1案だけが本編・資料請求・会社概要の3点セットで揃い、LINE公式へつながっています。台帳のなかで一番完成に近いのがここです。</p>
+  <div class="scroller">
+  <table>
+    <thead><tr>
+      <th class="c-name">何を作ったか</th>
+      <th class="c-parts">ページ構成</th>
+      <th class="c-prog">どこまで</th>
+      <th class="c-todo">残っていること</th>
+      <th class="c-url">本番URL（貼り付け欄）</th>
+    </tr></thead>
+    <tbody>
+
+      <tr class="now">
+        <td>
+          <span class="chip now">現行</span>
+          <p class="nm"><a href="https://claude.ai/code/artifact/7f212d2f-1999-4a55-ba64-865fbcc1b6bf" target="_blank" rel="noopener">家より先に、人生の話を。</a></p>
+          <p class="dir">韓国料理店の看板<span class="sep"> ／ </span>木の壁 × 生成りの横断幕</p>
+          <p class="meta">7f212d2f · 更新 09-03</p>
+        </td>
+        <td>
+          <ul class="parts">
+            <li><span class="k">本編</span><span>来る人が入れ替わる → 学び → 1エリア2社限定</span></li>
+            <li><span class="k">資料請求</span><a href="https://claude.ai/code/artifact/00bc4beb-3bef-4d45-a94b-90c693a3c746" target="_blank" rel="noopener">LINE・電話・メール案内</a></li>
+            <li><span class="k">会社概要</span><a href="https://claude.ai/code/artifact/5d670aad-cdef-49f7-bf67-38b65e8c396e" target="_blank" rel="noopener">代表電話まで記載</a></li>
+          </ul>
+        </td>
+        <td>
+          <div class="steps"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+          <p class="steplab"><b>3/4</b>　公開待ち</p>
+        </td>
+        <td>
+          <ul class="todo">
+            <li>本番ドメインへの公開だけが残り</li>
+            <li>問い合わせはLINE公式（lin.ee/WHYApuM）に集約済み</li>
+          </ul>
+        </td>
+        <td data-url="lmp-kankoku"></td>
+      </tr>
+
+      <tr>
+        <td>
+          <span class="chip alt">別案</span>
+          <p class="nm"><a href="https://claude.ai/code/artifact/db82fc95-4c62-4b83-b22c-e7cee86bc870" target="_blank" rel="noopener">いつも同じ集客ばっかやってんじゃねぇ！</a></p>
+          <p class="dir">喝・挑発ポスター<span class="sep"> ／ </span>赤と黄の斜めストライプ</p>
+          <p class="meta">db82fc95 · 更新 08-28</p>
+        </td>
+        <td>
+          <ul class="parts">
+            <li><span class="k">本編</span><span>「施策を増やすな。入口を変えろ」</span></li>
+            <li><span class="k">申込</span><span>4項目＋備考のフォームを内蔵</span></li>
+            <li class="none"><span class="k">付随</span>リンクだけあって実体なし</li>
+          </ul>
+        </td>
+        <td>
+          <div class="steps"><i class="on"></i><i class="half"></i><i></i><i></i></div>
+          <p class="steplab"><b>2/4</b>　リンク要修正</p>
+        </td>
+        <td>
+          <ul class="todo">
+            <li class="warn">kaisha-katsu.html / shiryou-katsu.html への相対リンクと、行き先が「#」のままのボタンが2つ</li>
+          </ul>
+        </td>
+        <td data-url="lmp-katsu"></td>
+      </tr>
+
+      <tr>
+        <td>
+          <span class="chip alt">別案</span>
+          <p class="nm"><a href="https://claude.ai/code/artifact/65b43069-9f73-4f01-881f-70c31cd5cc30" target="_blank" rel="noopener">加盟資格は、人生への愛。ただそれだけ。</a></p>
+          <p class="dir">星空タウン<span class="sep"> ／ </span>RC星空案と同じ世界観</p>
+          <p class="meta">65b43069 · 更新 08-24</p>
+        </td>
+        <td>
+          <ul class="parts">
+            <li><span class="k">本編</span><span>「星を1つ、灯すように」</span></li>
+            <li><span class="k">資料請求</span><a href="https://claude.ai/code/artifact/32b51fff-748e-4fb3-a257-99531381bd35" target="_blank" rel="noopener">あり</a></li>
+            <li><span class="k">会社概要</span><a href="https://claude.ai/code/artifact/cb3eacf9-1c9d-4722-a6d0-a599ed2fe3f5" target="_blank" rel="noopener">あり</a></li>
+          </ul>
+        </td>
+        <td>
+          <div class="steps"><i class="on"></i><i class="on"></i><i class="half"></i><i></i></div>
+          <p class="steplab"><b>3/4</b>　3ページ揃い</p>
+        </td>
+        <td>
+          <ul class="todo">
+            <li class="warn">行き先が「#」のままのボタンが2つ</li>
+            <li>現行案との統廃合の判断</li>
+          </ul>
+        </td>
+        <td data-url="lmp-hoshi"></td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============ まちの相談窓口 ============ -->
+<section class="grp">
+  <div class="grp-head">
+    <h2>まちの相談窓口</h2>
+    <span class="who">2版 / 4ページ</span>
+  </div>
+  <p class="grp-note">不動産屋が地域の相談窓口になる、という切り口のLP。昭和の銭湯ポスター（リソグラフ2色刷り）の見立てで統一。同じ内容で、フォーム版と最新のLINE誘導版の2つが残っています。付随ページは両方から共有しています。</p>
+  <div class="scroller">
+  <table>
+    <thead><tr>
+      <th class="c-name">何を作ったか</th>
+      <th class="c-parts">ページ構成</th>
+      <th class="c-prog">どこまで</th>
+      <th class="c-todo">残っていること</th>
+      <th class="c-url">本番URL（貼り付け欄）</th>
+    </tr></thead>
+    <tbody>
+
+      <tr class="now">
+        <td>
+          <span class="chip now">現行</span>
+          <p class="nm"><a href="https://claude.ai/code/artifact/1a259364-2cf9-4098-b864-bde6880ad6bf" target="_blank" rel="noopener">不動産屋が、まちの相談窓口になる。</a></p>
+          <p class="dir">銭湯ポスター<span class="sep"> ／ </span>LINE誘導版</p>
+          <p class="meta">1a259364 · 更新 09-03</p>
+        </td>
+        <td>
+          <ul class="parts">
+            <li><span class="k">本編</span><span>変わるのは来る人 → 学び → 先に始めた会社の話</span></li>
+            <li><span class="k">資料請求</span><a href="https://claude.ai/code/artifact/dec5629a-75b7-4a8d-ba24-a6e1b428c0d3" target="_blank" rel="noopener">あり</a></li>
+            <li><span class="k">会社概要</span><a href="https://claude.ai/code/artifact/0d2281f1-4a5f-4592-a013-1b5710b515b4" target="_blank" rel="noopener">あり</a></li>
+          </ul>
+        </td>
+        <td>
+          <div class="steps"><i class="on"></i><i class="on"></i><i class="half"></i><i></i></div>
+          <p class="steplab"><b>3/4</b>　あと少し</p>
+        </td>
+        <td>
+          <ul class="todo">
+            <li class="warn">行き先が「#」のままのリンクが2つ残っている</li>
+            <li>本番ドメインへの公開</li>
+          </ul>
+        </td>
+        <td data-url="machi-line"></td>
+      </tr>
+
+      <tr>
+        <td>
+          <span class="chip old">旧版</span>
+          <p class="nm"><a href="https://claude.ai/code/artifact/39f0d878-53ee-4d73-9625-e9ce060b7aa8" target="_blank" rel="noopener">まちの相談窓口（フォーム版）</a></p>
+          <p class="dir">銭湯ポスター<span class="sep"> ／ </span>申込フォーム内蔵</p>
+          <p class="meta">39f0d878 · 更新 08-20</p>
+        </td>
+        <td>
+          <ul class="parts">
+            <li><span class="k">本編</span><span>現行と同じ本文。CTAだけフォーム</span></li>
+            <li><span class="k">付随</span><span>現行と同じ資料請求・会社概要を共有</span></li>
+          </ul>
+        </td>
+        <td>
+          <div class="steps"><i class="on"></i><i class="on"></i><i class="half"></i><i></i></div>
+          <p class="steplab"><b>3/4</b>　保管</p>
+        </td>
+        <td>
+          <ul class="todo">
+            <li>現行に置き換わっているので、残すか消すかの判断</li>
+          </ul>
+        </td>
+        <td data-url="machi-form"></td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============ FC ============ -->
+<section class="grp">
+  <div class="grp-head">
+    <h2>不動産FC加盟｜収益構造で訴える案</h2>
+    <span class="who">1案 / 1ページ</span>
+  </div>
+  <p class="grp-note">加盟のメリットを「人生支援」ではなく「積み上がる収益」で説明した単発のLP。1ページだけで、付随ページはありません。</p>
+  <div class="scroller">
+  <table>
+    <thead><tr>
+      <th class="c-name">何を作ったか</th>
+      <th class="c-parts">ページ構成</th>
+      <th class="c-prog">どこまで</th>
+      <th class="c-todo">残っていること</th>
+      <th class="c-url">本番URL（貼り付け欄）</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td>
+          <span class="chip old">単発</span>
+          <p class="nm"><a href="https://claude.ai/code/artifact/d5160792-9b05-48a1-aa52-e88cff874321" target="_blank" rel="noopener">収益が積み上がる不動産FC加盟へ。</a></p>
+          <p class="dir">ボクシング<span class="sep"> ／ </span>黒地 × 赤とゴールド</p>
+          <p class="meta">d5160792 · 更新 08-19</p>
+        </td>
+        <td>
+          <ul class="parts">
+            <li><span class="k">本編</span><span>高収益フロー → 売買仲介 → RCでストック収益</span></li>
+            <li><span class="k">申込</span><span>4項目のフォームを内蔵</span></li>
+            <li class="none"><span class="k">付随</span>なし</li>
+          </ul>
+        </td>
+        <td>
+          <div class="steps"><i class="on"></i><i></i><i></i><i></i></div>
+          <p class="steplab"><b>1/4</b>　本編のみ</p>
+        </td>
+        <td>
+          <ul class="todo">
+            <li class="warn">ページのタイトルタグが空。共有すると名前なしで出る</li>
+            <li>資料請求・会社概要ページ、送信先の設定</li>
+          </ul>
+        </td>
+        <td data-url="fc-boxing"></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<div class="legend">
+  <h3>「どこまで」の4段の読み方</h3>
+  <ol>
+    <li><b>原稿とデザイン</b>　本編の文章とデザインが最後まで通っている</li>
+    <li><b>ページ構成</b>　資料請求・会社概要など、必要な付随ページが揃っている</li>
+    <li><b>問い合わせ導線</b>　ボタンの行き先が実在し、問い合わせが届く先につながっている（斜線＝仮づけ。メーラーを開くだけ、または「#」のまま）</li>
+    <li><b>本番公開</b>　独自ドメインで公開され、右端の欄にURLが入っている</li>
+  </ol>
+</div>
+
+<footer>
+  <p>この表は 2026-09-03 時点で、公開済みアーティファクト43件からLPに該当する22ページを抜き出し、1ページずつ中身を読んで作りました。「残っていること」は、実際のHTMLで確認した事実（ボタンの行き先、フォームの送信方法、ページの有無）だけを書いています。</p>
+  <p>付随ページのうち4ページ（RC星空案の会社概要、RCアイス案の資料請求、LMP星空案の資料請求と会社概要）は、親LPからのリンクで存在を確認しただけで、中身は個別に開いていません。</p>
+  <p>本番URLは、この表を開いた人全員に共有されます。保存すると4段目が埋まります。</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var ROWS = {};
+  document.querySelectorAll("td[data-url]").forEach(function(td){
+    var id = td.getAttribute("data-url");
+    var box = document.createElement("div"); box.className = "urlbox";
+    var row = document.createElement("div"); row.className = "urlrow";
+    var input = document.createElement("input");
+    input.type = "url"; input.placeholder = "https://…　公開したらここに貼る";
+    input.setAttribute("aria-label", "本番URL");
+    var btn = document.createElement("button");
+    btn.type = "button"; btn.textContent = "保存"; btn.disabled = true;
+    var state = document.createElement("p"); state.className = "urlstate";
+    state.textContent = "読み込み中…";
+    row.appendChild(input); row.appendChild(btn);
+    box.appendChild(row); box.appendChild(state);
+    td.appendChild(box);
+    ROWS[id] = {input:input, btn:btn, state:state, tr:td.closest("tr"), saved:""};
+  });
+
+  function setStep4(row, filled){
+    var bars = row.tr.querySelectorAll(".steps i");
+    var lab = row.tr.querySelector(".steplab b");
+    if (!bars.length) return;
+    bars[3].className = filled ? "on" : "";
+    if (lab && filled) lab.textContent = "4/4";
+  }
+
+  function retally(){
+    var n = 0;
+    Object.keys(ROWS).forEach(function(k){ if (ROWS[k].saved) n++; });
+    var t = document.querySelector(".t-gap");
+    t.querySelector("b").textContent = String(n);
+    t.classList.toggle("t-gap", n === 0);
+    t.classList.toggle("t-live", n > 0);
+  }
+
+  function show(row, url){
+    row.saved = url || "";
+    row.input.value = row.saved;
+    setStep4(row, !!row.saved);
+    if (row.saved) {
+      row.state.className = "urlstate ok";
+      row.state.innerHTML = "公開中 · <a href=\"" + row.saved.replace(/"/g,"&quot;") +
+        "\" target=\"_blank\" rel=\"noopener\">開く</a>";
+    } else {
+      row.state.className = "urlstate";
+      row.state.textContent = "未登録";
+    }
+    retally();
+  }
+
+  function offline(msg){
+    Object.keys(ROWS).forEach(function(k){
+      var r = ROWS[k];
+      r.state.className = "urlstate";
+      r.state.textContent = msg;
+      r.btn.disabled = true;
+      r.input.disabled = true;
+      r.input.placeholder = "保存できません";
+    });
+  }
+
+  var api = (typeof window.claude === "object" && window.claude && typeof window.claude.use === "function")
+    ? window.claude.use("db") : Promise.resolve(null);
+
+  api.then(function(db){
+    if (!db) { offline("この画面ではURLを保存できません"); return; }
+
+    Object.keys(ROWS).forEach(function(id){
+      var row = ROWS[id];
+      var ref = db.doc("lp/" + id);
+
+      ref.onSnapshot(function(snap){
+        var url = snap.exists ? (snap.data().url || "") : "";
+        if (document.activeElement !== row.input) show(row, url);
+      }, function(){
+        row.state.className = "urlstate err";
+        row.state.textContent = "同期が切れました。再読み込みしてください";
+      });
+
+      function dirty(){
+        row.btn.disabled = row.input.value.trim() === row.saved;
+      }
+      row.input.addEventListener("input", dirty);
+
+      row.btn.addEventListener("click", function(){
+        var v = row.input.value.trim();
+        row.btn.disabled = true;
+        row.state.className = "urlstate";
+        row.state.textContent = "保存中…";
+        ref.set({ url: v, updatedAt: new Date().toISOString() }).then(function(){
+          show(row, v);
+        }).catch(function(e){
+          row.state.className = "urlstate err";
+          row.state.textContent = (e && e.code === "invalid_argument")
+            ? "この画面からは保存できません（編集権限が要ります）"
+            : "保存できませんでした。もう一度お試しください";
+          row.btn.disabled = false;
+        });
+      });
+
+      row.input.addEventListener("keydown", function(e){
+        if (e.key === "Enter") { e.preventDefault(); if (!row.btn.disabled) row.btn.click(); }
+      });
+    });
+  }).catch(function(){ offline("この画面ではURLを保存できません"); });
+})();
+</script>
