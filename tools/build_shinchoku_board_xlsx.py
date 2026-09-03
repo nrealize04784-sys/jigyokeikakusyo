@@ -3,16 +3,27 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.datavalidation import DataValidation
-from openpyxl.formatting.rule import CellIsRule
+from openpyxl.formatting.rule import CellIsRule, DataBarRule
 from openpyxl.comments import Comment
 
 F="Meiryo"
 INK="1B2330"; ACC="1F4E6B"; RULE="DFD8CA"; BAND="FAF8F3"; INPUT="FFF3C4"
 GREEN="1C6647"; AMBER="8A5A12"; RED="993124"; GREY="6E747D"
+EDIT="EAF1F6"   # 選んで変えられるセル
 A="https://claude.ai/code/artifact/"
 thin=Side(style="thin",color=RULE); box=Border(left=thin,right=thin,top=thin,bottom=thin)
 
 wb=Workbook()
+
+# 進捗のドロップダウン用の値を、非表示シートに置く。
+# 範囲を参照する入力規則にすると、Excelのドロップダウンに「20%」と書式つきで並ぶ。
+opt=wb.create_sheet("選択肢")
+opt["A1"]="進捗"; opt["A1"].font=Font(name=F,size=9,bold=True)
+for i in range(21):
+    c=opt.cell(row=2+i,column=1,value=i*0.05)
+    c.number_format="0%"; c.font=Font(name=F,size=9)
+PCT_LIST="'選択肢'!$A$2:$A$22"
+STATE_LIST='"未着手,進行中,確認待ち"'
 
 def sheet_header(ws, title, lead, note):
     ws["A1"]=title; ws["A1"].font=Font(name=F,size=16,bold=True,color=INK)
@@ -113,8 +124,15 @@ ws.cell(row=HR+1,column=10).comment=Comment(
 for mark,color in (("×",RED),("△",AMBER),("○",GREEN)):
     ws.conditional_formatting.add("E{0}:H{1}".format(first,last),
         CellIsRule(operator="equal",formula=['"%s"'%mark],font=Font(name=F,size=9,bold=True,color=color)))
-dv=DataValidation(type="list",formula1='"○,△,×"',allow_blank=False); ws.add_data_validation(dv)
-dv.add("E{0}:G{1}".format(first,last))
+dv=DataValidation(type="list",formula1='"○,△,×"',allow_blank=False)
+dv.prompt="○＝できている／△＝仮づけ／×＝手つかず"; dv.promptTitle="選んでください"
+ws.add_data_validation(dv); dv.add("E{0}:G{1}".format(first,last))
+for col in "EFG":
+    for r in range(first,last+1):
+        ws["{0}{1}".format(col,r)].fill=PatternFill("solid",fgColor=EDIT)
+ws.conditional_formatting.add("I{0}:I{1}".format(first,last),
+    DataBarRule(start_type="num",start_value=0,end_type="num",end_value=4,
+                color=ACC,showValue=True))
 
 tot=last+1
 c=ws.cell(row=tot,column=4,value="合計 / 平均"); c.font=Font(name=F,size=9,bold=True,color=INK)
@@ -161,8 +179,21 @@ def task_sheet(name,title,lead,note,groups):
             j.fill=PatternFill("solid",fgColor=INPUT); j.font=Font(name=F,size=9,color="0000FF")
             inputs.append(r); r+=1
     f,l=6,r-1
+    # 進捗：セルの中にバーを出す
     s.conditional_formatting.add("F{0}:F{1}".format(f,l),
-        CellIsRule(operator="equal",formula=["0"],font=Font(name=F,size=9,color=GREY)))
+        DataBarRule(start_type="num",start_value=0,end_type="num",end_value=1,
+                    color=ACC,showValue=True))
+    # 進捗：クリックすると 0%〜100% が並ぶドロップダウン
+    dvp=DataValidation(type="list",formula1=PCT_LIST,allow_blank=True)
+    dvp.prompt="5%きざみで選べます。直接入力もできます。"; dvp.promptTitle="進捗を選ぶ"
+    s.add_data_validation(dvp); dvp.add("F{0}:F{1}".format(f,l))
+    # 状態：ドロップダウン
+    dvs=DataValidation(type="list",formula1=STATE_LIST,allow_blank=False)
+    dvs.prompt="未着手／進行中／確認待ち"; dvs.promptTitle="状態を選ぶ"
+    s.add_data_validation(dvs); dvs.add("G{0}:G{1}".format(f,l))
+    for rr in range(f,l+1):
+        s["F{0}".format(rr)].fill=PatternFill("solid",fgColor=EDIT)
+        s["G{0}".format(rr)].fill=PatternFill("solid",fgColor=EDIT)
     t=r
     c=s.cell(row=t,column=5,value="平均"); c.font=Font(name=F,size=9,bold=True,color=INK)
     c.alignment=Alignment(horizontal="right")
@@ -261,17 +292,22 @@ kv(17,"未着手","まだ始まっていない")
 kv(18,"P2／P3","工程表の優先度。P3は「中核が回り出してから戻ってくる」もの")
 kv(19,"赤い担当名","担当が「未定」の仕事。誰かを決めないと進みません")
 head(21,"使い方")
-kv(22,"黄色の記入欄","公開したURL・動画URL・広告の入稿先を貼ります。ここだけが記入欄です。")
-kv(23,"自動で動く数字","LPシートは④と到達度、各シートの最下段の平均・件数が数式です。手で書き換えないでください。")
-head(25,"出典")
-kv(26,"LPシート","公開済みアーティファクト43件のうちLPに該当する22ページ（本編11＋付随11）を、1ページずつHTMLを読んで確認。ボタンの行き先・フォームの送信方法・付随ページの有無は実物ベースです。")
-kv(27,"進捗％と担当","社内の「REALIZE OS 制作MASTER」(2026-09-03) と「仕事の棚卸し」(2026-09-02) の数値をそのまま引いています。")
-kv(28,"担当の食い違い","広告運用の担当は2資料で記載が違います（制作MASTER＝大熊・片山／棚卸し＝池之上・片山）。広告制作は大熊・片山、広告運用は池之上・片山としています。")
-kv(29,"未確認","LP付随ページ4本（RC星空案の会社概要、RCアイス案の資料請求、LMP星空案の資料請求と会社概要）は、親LPからのリンクで存在を確認しただけで中身は開いていません。")
-kv(30,"調査日","2026-09-03")
-for r in list(range(4,8))+[10,11,12]+list(range(15,20))+[22,23]+list(range(26,31)):
+kv(22,"進捗のセル（水色）","クリックすると右に▼が出ます。0%〜100%を5%きざみで選べます（直接入力も可）。選ぶとセルの中のバーがその長さに変わります。")
+kv(23,"状態のセル（水色）","クリックして 未着手／進行中／確認待ち を選びます。")
+kv(24,"LPの○△×（水色）","E〜G列。クリックして選び直せます。H列の④本番公開はJ列のURL有無から自動で決まります。")
+kv(25,"列見出しの▼","各シートの見出し行にオートフィルタが付いています。▼から値を選ぶと、その行だけ表示されます。複数の列を組み合わせられます。")
+kv(26,"黄色の記入欄","公開したURL・動画URL・広告の入稿先を貼ります。")
+kv(27,"自動で動く数字","LPシートは④と到達度、各シートの最下段の平均・件数が数式です。手で書き換えないでください。")
+head(29,"出典")
+kv(30,"LPシート","公開済みアーティファクト43件のうちLPに該当する22ページ（本編11＋付随11）を、1ページずつHTMLを読んで確認。ボタンの行き先・フォームの送信方法・付随ページの有無は実物ベースです。")
+kv(31,"進捗％と担当","社内の「REALIZE OS 制作MASTER」(2026-09-03) と「仕事の棚卸し」(2026-09-02) の数値をそのまま引いています。")
+kv(32,"担当の食い違い","広告運用の担当は2資料で記載が違います（制作MASTER＝大熊・片山／棚卸し＝池之上・片山）。広告制作は大熊・片山、広告運用は池之上・片山としています。")
+kv(33,"未確認","LP付随ページ4本（RC星空案の会社概要、RCアイス案の資料請求、LMP星空案の資料請求と会社概要）は、親LPからのリンクで存在を確認しただけで中身は開いていません。")
+kv(34,"調査日","2026-09-03")
+for r in list(range(4,8))+[10,11,12]+list(range(15,20))+list(range(22,28))+list(range(30,35)):
     lg.row_dimensions[r].height=36
 
+opt.sheet_state="hidden"
 wb.calculation.fullCalcOnLoad = True
 wb.save("/home/user/jigyokeikakusyo/制作進捗ボード.xlsx")
 print("saved")
